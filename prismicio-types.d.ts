@@ -4,6 +4,71 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+type HomePageDocumentDataSlicesSlice = HeroSectionSlice;
+
+/**
+ * Content for Home Page documents
+ */
+interface HomePageDocumentData {
+  /**
+   * Slice Zone field in *Home Page*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: home_page.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<HomePageDocumentDataSlicesSlice> /**
+   * Meta Title field in *Home Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: home_page.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Home Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: home_page.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Home Page*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: home_page.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Home Page document from Prismic
+ *
+ * - **API ID**: `home_page`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HomePageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<HomePageDocumentData>,
+    "home_page",
+    Lang
+  >;
+
 type PageDocumentDataSlicesSlice = HeroSectionSlice;
 
 /**
@@ -64,6 +129,221 @@ interface PageDocumentData {
  */
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
+
+/**
+ * Item in *Project Post → Project's Gallery*
+ */
+export interface ProjectPostDocumentDataGalleryImagesItem {
+  /**
+   * Gallery Image field in *Project Post → Project's Gallery*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.gallery_images[].image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+}
+
+type ProjectPostDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Project Post documents
+ */
+interface ProjectPostDocumentData {
+  /**
+   * Description field in *Project Post*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Enter Description (Must)
+   * - **API ID Path**: project_post.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Client Name field in *Project Post*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Client's Name (Must)
+   * - **API ID Path**: project_post.client_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  client_name: prismic.KeyTextField;
+
+  /**
+   * Year field in *Project Post*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Year (Must)
+   * - **API ID Path**: project_post.year
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  year: prismic.KeyTextField;
+
+  /**
+   * Sector field in *Project Post*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Please Enter Sector (Must)
+   * - **API ID Path**: project_post.sector
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  sector: prismic.SelectField<
+    | "Commercial"
+    | "Industrial"
+    | "Hospitality"
+    | "Medical Construction"
+    | "Residential"
+  >;
+
+  /**
+   * Sub Sector field in *Project Post*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Please Enter Sub Sector
+   * - **API ID Path**: project_post.sub_sector
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  sub_sector: prismic.SelectField<
+    | "Automotive Showrooms"
+    | "Admin Buildings"
+    | "Malls"
+    | "Factories"
+    | "Warehouses"
+    | "Hotels"
+    | "Boats"
+    | "Restaurants"
+    | "Hospitals"
+    | "Clinics"
+  >;
+
+  /**
+   * Role field in *Project Post*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Role (Must)
+   * - **API ID Path**: project_post.role
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  role: prismic.KeyTextField;
+
+  /**
+   * Location field in *Project Post*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Please Enter Location (Must)
+   * - **API ID Path**: project_post.location
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  location: prismic.SelectField<
+    | "Cairo"
+    | "Giza"
+    | "Alexandria"
+    | "Aswan"
+    | "Asyut"
+    | "Beheira"
+    | "Beni Suef"
+    | "Dakahlia"
+    | "Damietta"
+    | "Faiyum"
+    | "Gharbia"
+    | "Ismailia"
+    | "Kafr El Sheikh"
+    | "Luxor"
+    | "Matruh"
+    | "Minya"
+    | "Monufia"
+    | "New Valley"
+    | "North Sinai"
+    | "Port Said"
+    | "Qalyubia"
+    | "Qena"
+    | "Red Sea"
+    | "Sharqia"
+    | "Sohag"
+    | "South Sinai"
+    | "Suez"
+  >;
+
+  /**
+   * Project's Gallery field in *Project Post*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.gallery_images[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  gallery_images: prismic.GroupField<
+    Simplify<ProjectPostDocumentDataGalleryImagesItem>
+  >;
+
+  /**
+   * Slice Zone field in *Project Post*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#slices
+   */
+  slices: prismic.SliceZone<ProjectPostDocumentDataSlicesSlice> /**
+   * Meta Title field in *Project Post*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: project_post.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Project Post*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: project_post.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Project Post*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Project Post document from Prismic
+ *
+ * - **API ID**: `project_post`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ProjectPostDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ProjectPostDocumentData>,
+    "project_post",
+    Lang
+  >;
 
 /**
  * Item in *Settings → Main Navigation*
@@ -426,7 +706,11 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
-export type AllDocumentTypes = PageDocument | SettingsDocument;
+export type AllDocumentTypes =
+  | HomePageDocument
+  | PageDocument
+  | ProjectPostDocument
+  | SettingsDocument;
 
 /**
  * Item in *HeroSection → Default → Primary → Hero Slides*
@@ -609,9 +893,16 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      HomePageDocument,
+      HomePageDocumentData,
+      HomePageDocumentDataSlicesSlice,
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
+      ProjectPostDocument,
+      ProjectPostDocumentData,
+      ProjectPostDocumentDataGalleryImagesItem,
+      ProjectPostDocumentDataSlicesSlice,
       SettingsDocument,
       SettingsDocumentData,
       SettingsDocumentDataMainNavigationItem,

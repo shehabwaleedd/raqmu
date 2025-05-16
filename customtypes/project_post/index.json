@@ -1,0 +1,167 @@
+{
+  "format": "page",
+  "id": "project_post",
+  "label": "Project Post",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID"
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Description",
+          "placeholder": "Enter Description (Must)",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      },
+      "client_name": {
+        "type": "Text",
+        "config": {
+          "label": "Client Name",
+          "placeholder": "Please Enter Client's Name (Must)"
+        }
+      },
+      "year": {
+        "type": "Text",
+        "config": {
+          "label": "Year",
+          "placeholder": "Please Enter Year (Must)"
+        }
+      },
+      "sector": {
+        "type": "Select",
+        "config": {
+          "label": "Sector",
+          "placeholder": "Please Enter Sector (Must)",
+          "options": [
+            "Commercial",
+            "Industrial",
+            "Hospitality",
+            "Medical Construction",
+            "Residential"
+          ]
+        }
+      },
+      "sub_sector": {
+        "type": "Select",
+        "config": {
+          "label": "Sub Sector",
+          "placeholder": "Please Enter Sub Sector",
+          "options": [
+            "Automotive Showrooms",
+            "Admin Buildings",
+            "Malls",
+            "Factories",
+            "Warehouses",
+            "Hotels",
+            "Boats",
+            "Restaurants",
+            "Hospitals",
+            "Clinics"
+          ]
+        }
+      },
+      "role": {
+        "type": "Text",
+        "config": {
+          "label": "Role",
+          "placeholder": "Please Enter Role (Must)"
+        }
+      },
+      "location": {
+        "type": "Select",
+        "config": {
+          "label": "Location",
+          "placeholder": "Please Enter Location (Must)",
+          "options": [
+            "Cairo",
+            "Giza",
+            "Alexandria",
+            "Aswan",
+            "Asyut",
+            "Beheira",
+            "Beni Suef",
+            "Dakahlia",
+            "Damietta",
+            "Faiyum",
+            "Gharbia",
+            "Ismailia",
+            "Kafr El Sheikh",
+            "Luxor",
+            "Matruh",
+            "Minya",
+            "Monufia",
+            "New Valley",
+            "North Sinai",
+            "Port Said",
+            "Qalyubia",
+            "Qena",
+            "Red Sea",
+            "Sharqia",
+            "Sohag",
+            "South Sinai",
+            "Suez"
+          ]
+        }
+      },
+      "gallery_images": {
+        "type": "Group",
+        "config": {
+          "label": "Project's Gallery",
+          "repeat": true,
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "label": "Gallery Image",
+                "constraint": {},
+                "thumbnails": []
+              }
+            }
+          }
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {}
+        }
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "config": {
+          "label": "Meta Title",
+          "placeholder": "A title of the page used for social media and search engines"
+        },
+        "type": "Text"
+      },
+      "meta_description": {
+        "config": {
+          "label": "Meta Description",
+          "placeholder": "A brief summary of the page"
+        },
+        "type": "Text"
+      },
+      "meta_image": {
+        "config": {
+          "constraint": {
+            "height": 1260,
+            "width": 2400
+          },
+          "label": "Meta Image",
+          "thumbnails": []
+        },
+        "type": "Image"
+      }
+    }
+  }
+}
