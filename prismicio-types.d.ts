@@ -65,7 +65,368 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-export type AllDocumentTypes = PageDocument;
+/**
+ * Item in *Settings → Main Navigation*
+ */
+export interface SettingsDocumentDataMainNavigationItem {
+  /**
+   * Navigation Title field in *Settings → Main Navigation*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. Products, Who We Are
+   * - **API ID Path**: settings.main_navigation[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * URL Path field in *Settings → Main Navigation*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. /products
+   * - **API ID Path**: settings.main_navigation[].href
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  href: prismic.KeyTextField;
+
+  /**
+   * Has Submenu field in *Settings → Main Navigation*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: settings.main_navigation[].has_submenu
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  has_submenu: prismic.BooleanField;
+}
+
+/**
+ * Item in *Settings → Submenu Sections → Submenu Items*
+ */
+export interface SettingsDocumentDataSubmenuSectionsItemsItem {
+  /**
+   * Item Title field in *Settings → Submenu Sections → Submenu Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. About Us
+   * - **API ID Path**: settings.submenu_sections[].items[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Section ID field in *Settings → Submenu Sections → Submenu Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. about-us (for scrolling to section)
+   * - **API ID Path**: settings.submenu_sections[].items[].section_id
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  section_id: prismic.KeyTextField;
+
+  /**
+   * Display Order field in *Settings → Submenu Sections → Submenu Items*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 1, 2, 3...
+   * - **API ID Path**: settings.submenu_sections[].items[].order
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  order: prismic.NumberField;
+}
+
+/**
+ * Item in *Settings → Submenu Sections*
+ */
+export interface SettingsDocumentDataSubmenuSectionsItem {
+  /**
+   * Parent Navigation field in *Settings → Submenu Sections*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter exact navigation title (e.g. Who We Are)
+   * - **API ID Path**: settings.submenu_sections[].parent_nav
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  parent_nav: prismic.KeyTextField;
+
+  /**
+   * Submenu Items field in *Settings → Submenu Sections*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.submenu_sections[].items[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  items: prismic.NestedGroupField<
+    Simplify<SettingsDocumentDataSubmenuSectionsItemsItem>
+  >;
+}
+
+/**
+ * Item in *Settings → Product Categories*
+ */
+export interface SettingsDocumentDataProductCategoriesItem {
+  /**
+   * Category Title field in *Settings → Product Categories*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. Fire Valves
+   * - **API ID Path**: settings.product_categories[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Category URL field in *Settings → Product Categories*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. /products/fire-valves
+   * - **API ID Path**: settings.product_categories[].href
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  href: prismic.KeyTextField;
+
+  /**
+   * Display Order field in *Settings → Product Categories*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: Enter number for ordering
+   * - **API ID Path**: settings.product_categories[].order
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  order: prismic.NumberField;
+}
+
+/**
+ * Item in *Settings → Social Media Links*
+ */
+export interface SettingsDocumentDataSocialLinksItem {
+  /**
+   * Platform Name field in *Settings → Social Media Links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. Instagram
+   * - **API ID Path**: settings.social_links[].label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Social Media URL field in *Settings → Social Media Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Enter full URL
+   * - **API ID Path**: settings.social_links[].url
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Item in *Settings → Contact Information*
+ */
+export interface SettingsDocumentDataContactInformationItem {
+  /**
+   * Information Type field in *Settings → Contact Information*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.contact_information[].type
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  type: prismic.SelectField<"email" | "phone" | "address">;
+
+  /**
+   * Contact Detail field in *Settings → Contact Information*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter contact information
+   * - **API ID Path**: settings.contact_information[].value
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  value: prismic.KeyTextField;
+
+  /**
+   * Display Order field in *Settings → Contact Information*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.contact_information[].order
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  order: prismic.NumberField;
+}
+
+/**
+ * Item in *Settings → Footer Legal Links*
+ */
+export interface SettingsDocumentDataFooterLegalLinksItem {
+  /**
+   * Link Text field in *Settings → Footer Legal Links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Privacy Policy
+   * - **API ID Path**: settings.footer_legal_links[].label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Link URL field in *Settings → Footer Legal Links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: /privacy
+   * - **API ID Path**: settings.footer_legal_links[].url
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  url: prismic.KeyTextField;
+}
+
+/**
+ * Content for Settings documents
+ */
+interface SettingsDocumentData {
+  /**
+   * Site Title field in *Settings*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter site title
+   * - **API ID Path**: settings.site_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  site_title: prismic.KeyTextField;
+
+  /**
+   * Logo field in *Settings*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.site_logo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  site_logo: prismic.ImageField<never>;
+
+  /**
+   * Main Navigation field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.main_navigation[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  main_navigation: prismic.GroupField<
+    Simplify<SettingsDocumentDataMainNavigationItem>
+  >;
+
+  /**
+   * Submenu Sections field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.submenu_sections[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  submenu_sections: prismic.GroupField<
+    Simplify<SettingsDocumentDataSubmenuSectionsItem>
+  >;
+
+  /**
+   * Product Categories field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.product_categories[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  product_categories: prismic.GroupField<
+    Simplify<SettingsDocumentDataProductCategoriesItem>
+  >;
+
+  /**
+   * Social Media Links field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.social_links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  social_links: prismic.GroupField<
+    Simplify<SettingsDocumentDataSocialLinksItem>
+  >;
+
+  /**
+   * Contact Information field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.contact_information[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  contact_information: prismic.GroupField<
+    Simplify<SettingsDocumentDataContactInformationItem>
+  >;
+
+  /**
+   * Footer Tagline field in *Settings*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: MEP Solutions // Firefighting Solutions // Valves // Pipes // Hose Cabinet // Pumps
+   * - **API ID Path**: settings.footer_tagline
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  footer_tagline: prismic.KeyTextField;
+
+  /**
+   * Footer Logo field in *Settings*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.footer_logo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  footer_logo: prismic.ImageField<never>;
+
+  /**
+   * Footer Legal Links field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.footer_legal_links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  footer_legal_links: prismic.GroupField<
+    Simplify<SettingsDocumentDataFooterLegalLinksItem>
+  >;
+}
+
+/**
+ * Settings document from Prismic
+ *
+ * - **API ID**: `settings`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SettingsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<SettingsDocumentData>,
+    "settings",
+    Lang
+  >;
+
+export type AllDocumentTypes = PageDocument | SettingsDocument;
 
 /**
  * Default variation for Test Slice
@@ -118,6 +479,15 @@ declare module "@prismicio/client" {
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
+      SettingsDocument,
+      SettingsDocumentData,
+      SettingsDocumentDataMainNavigationItem,
+      SettingsDocumentDataSubmenuSectionsItemsItem,
+      SettingsDocumentDataSubmenuSectionsItem,
+      SettingsDocumentDataProductCategoriesItem,
+      SettingsDocumentDataSocialLinksItem,
+      SettingsDocumentDataContactInformationItem,
+      SettingsDocumentDataFooterLegalLinksItem,
       AllDocumentTypes,
       TestSlice,
       TestSliceVariation,

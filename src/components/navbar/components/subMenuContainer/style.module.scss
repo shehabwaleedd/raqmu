@@ -1,0 +1,65 @@
+@import '@/styles/variables.scss';
+@import '@/styles/mixins.scss';
+.submenu {
+    position: fixed;    
+    z-index: 1000;
+    padding: $spacing-xs;
+    pointer-events: auto;
+
+    .submenuBackground {
+        position: absolute;
+        inset: 0;
+        background: $white;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(250, 250, 250, 0.3);
+
+        &::before {
+            content: '';
+            @include position(absolute, -$spacing-xs, null, null, 50%);
+            transform: translateX(-50%) rotate(45deg);
+            width: 8px;
+            height: 8px;
+            background: inherit;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    ul {
+        position: relative;
+        @include flex(column, flex-start, stretch);
+        padding: 6px;
+        gap: 2px;
+
+        li {
+            width: 100%;
+            border-radius: 8px;
+
+            button {
+                width: 100%;
+                padding: $spacing-sx $spacing-sm;
+                color: $title-color;
+                background: transparent;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                text-align: left;
+                font-size: $normal-font-size;
+                font-weight: 450;
+                letter-spacing: -0.01em;
+                transition: $animation-primary;
+
+                &:hover {
+                    background: darken($background-color, 2%);
+                }
+
+                &:active {
+                    background: darken($background-color, 2%);
+                }
+            }
+        }
+    }
+}

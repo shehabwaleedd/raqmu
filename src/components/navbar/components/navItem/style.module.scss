@@ -1,0 +1,36 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.navItem {
+    position: relative;
+    text-transform: capitalize;
+
+    .navButton {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-family: $body-font;
+        font-weight: $body-font-weight;
+        width: fit-content;
+        font-size: $normal-font-size;
+        padding: 0.75rem $spacing-sm;
+        position: relative;
+        color: $white;
+
+        &::after {
+            content: '';
+            @include position(absolute, null, null, 0, 0);
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left;
+        }
+
+        &:hover::after,
+        &.active::after {
+            width: 100%;
+        }
+
+    }
+}

@@ -1,0 +1,27 @@
+@import "@/styles/variables.scss";
+
+.headerContainer {
+    line-height: 0.8;
+    font-family: $title-font;
+    display: block; 
+
+    @media (max-width: 556px) {
+        line-height: 0.88;
+    }
+}
+
+.wordWrapper {
+    display: inline-block; 
+    white-space: nowrap;
+}
+
+.header {
+    display: inline-block;
+    overflow: hidden;
+    user-select: none;
+    position: relative;
+
+    span {
+        display: inline-block;
+    }
+}

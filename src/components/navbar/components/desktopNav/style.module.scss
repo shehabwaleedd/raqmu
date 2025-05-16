@@ -1,0 +1,65 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.header {
+    @include position(fixed, 1rem, null, null, 0);
+    width: 100%;
+    z-index: 999;
+    mix-blend-mode: difference;
+}
+
+.nav {
+    @include flex(row, center, center);
+    padding: $spacing-xl;
+    height: 5vh;
+    width: 100%;
+    transition: $animation-primary;
+    user-select: none;
+
+    @include respond-to(ipad, max) {
+        @include flex(row, flex-start, flex-start);
+        padding: 0;
+        height: 0;
+    }
+
+
+
+    &__left,
+    &__right {
+        @include flex(row, center, center);
+        flex: 1;
+
+        @include respond-to(ipad, max) {
+            display: none;
+        }
+
+        ul {
+            @include flex(row, center, center);
+
+            @include respond-to(desktop, min) {
+                gap: $spacing-sm;
+            }
+        }
+    }
+
+
+
+    &__logo {
+        z-index: 99999;
+        @include respond-to(ipad, max) {
+            position: relative;
+            top: -3vh;
+            left: 1rem;
+        }
+
+        img {
+            transition: $animation-primary;
+            object-fit: contain;
+
+            @include respond-to(ipad, max) {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    }
+}

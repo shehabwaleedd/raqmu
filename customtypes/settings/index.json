@@ -1,0 +1,233 @@
+{
+  "format": "custom",
+  "id": "settings",
+  "label": "Settings",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "site_title": {
+        "type": "Text",
+        "config": {
+          "label": "Site Title",
+          "placeholder": "Enter site title"
+        }
+      },
+      "site_logo": {
+        "type": "Image",
+        "config": {
+          "label": "Logo",
+          "constraint": {
+            "width": null,
+            "height": null
+          },
+          "thumbnails": []
+        }
+      },
+      "main_navigation": {
+        "type": "Group",
+        "config": {
+          "label": "Main Navigation",
+          "repeat": true,
+          "fields": {
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Navigation Title",
+                "placeholder": "e.g. Products, Who We Are"
+              }
+            },
+            "href": {
+              "type": "Text",
+              "config": {
+                "label": "URL Path",
+                "placeholder": "e.g. /products"
+              }
+            },
+            "has_submenu": {
+              "type": "Boolean",
+              "config": {
+                "label": "Has Submenu",
+                "placeholder_false": "No submenu",
+                "placeholder_true": "Has submenu",
+                "default_value": false
+              }
+            }
+          }
+        }
+      },
+      "submenu_sections": {
+        "type": "Group",
+        "config": {
+          "label": "Submenu Sections",
+          "repeat": true,
+          "fields": {
+            "parent_nav": {
+              "type": "Text",
+              "config": {
+                "label": "Parent Navigation",
+                "placeholder": "Enter exact navigation title (e.g. Who We Are)"
+              }
+            },
+            "items": {
+              "type": "Group",
+              "config": {
+                "label": "Submenu Items",
+                "repeat": true,
+                "fields": {
+                  "title": {
+                    "type": "Text",
+                    "config": {
+                      "label": "Item Title",
+                      "placeholder": "e.g. About Us"
+                    }
+                  },
+                  "section_id": {
+                    "type": "Text",
+                    "config": {
+                      "label": "Section ID",
+                      "placeholder": "e.g. about-us (for scrolling to section)"
+                    }
+                  },
+                  "order": {
+                    "type": "Number",
+                    "config": {
+                      "label": "Display Order",
+                      "placeholder": "1, 2, 3..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "product_categories": {
+        "type": "Group",
+        "config": {
+          "label": "Product Categories",
+          "repeat": true,
+          "fields": {
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Category Title",
+                "placeholder": "e.g. Fire Valves"
+              }
+            },
+            "href": {
+              "type": "Text",
+              "config": {
+                "label": "Category URL",
+                "placeholder": "e.g. /products/fire-valves"
+              }
+            },
+            "order": {
+              "type": "Number",
+              "config": {
+                "label": "Display Order",
+                "placeholder": "Enter number for ordering"
+              }
+            }
+          }
+        }
+      },
+      "social_links": {
+        "type": "Group",
+        "config": {
+          "label": "Social Media Links",
+          "repeat": true,
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Platform Name",
+                "placeholder": "e.g. Instagram"
+              }
+            },
+            "url": {
+              "type": "Link",
+              "config": {
+                "label": "Social Media URL",
+                "placeholder": "Enter full URL",
+                "allowTargetBlank": true,
+                "select": null
+              }
+            }
+          }
+        }
+      },
+      "contact_information": {
+        "type": "Group",
+        "config": {
+          "label": "Contact Information",
+          "repeat": true,
+          "fields": {
+            "type": {
+              "type": "Select",
+              "config": {
+                "label": "Information Type",
+                "placeholder": "",
+                "options": ["email", "phone", "address"]
+              }
+            },
+            "value": {
+              "type": "Text",
+              "config": {
+                "label": "Contact Detail",
+                "placeholder": "Enter contact information"
+              }
+            },
+            "order": {
+              "type": "Number",
+              "config": {
+                "label": "Display Order",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
+      "footer_tagline": {
+        "type": "Text",
+        "config": {
+          "label": "Footer Tagline",
+          "placeholder": "MEP Solutions // Firefighting Solutions // Valves // Pipes // Hose Cabinet // Pumps"
+        }
+      },
+      "footer_logo": {
+        "type": "Image",
+        "config": {
+          "label": "Footer Logo",
+          "constraint": {
+            "width": null,
+            "height": null
+          }
+        }
+      },
+      "footer_legal_links": {
+        "type": "Group",
+        "config": {
+          "label": "Footer Legal Links",
+          "repeat": true,
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Link Text",
+                "placeholder": "Privacy Policy"
+              }
+            },
+            "url": {
+              "type": "Text",
+              "config": {
+                "label": "Link URL",
+                "placeholder": "/privacy"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

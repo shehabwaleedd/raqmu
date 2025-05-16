@@ -1,0 +1,162 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.achievementsCarousel {
+    padding: $spacing-xl;
+
+
+    &__upper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-lg;
+        width: 100%;
+
+        @include respond-to(small-tablet) {
+            display: unset;
+        }
+    }
+
+    &__content {
+        @include respond-to(small-tablet) {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+    }
+}
+
+.container {
+    max-width: 1200;
+    margin: 0 auto;
+
+    @include respond-to(large-screen) {
+        max-width: 100%;
+    }
+}
+
+.carouselBtns {
+    display: flex;
+    gap: $spacing-sm;
+    color: $accent-color;
+
+    @include respond-to(ipad) {
+        margin-top: $spacing-sm;
+        justify-content: flex-end;
+        width: 100%;
+        padding-right: 1rem;
+    }
+}
+
+.carouselBtn {
+    color: $accent-color !important;
+    border: 1px solid $accent-color;
+    border-radius: $border-radius-full;
+    width: 40px;
+    height: 40px;
+    @include flexCenter(row);
+    opacity: 0.5;
+}
+
+.skeletonSlider {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+    padding: $spacing-sm;
+    width: 100%;
+
+    @include respond-to(medium-tablet) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to(phone) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.skeletonTitle {
+    height: 48px;
+    width: 300px;
+    margin-bottom: $spacing-sm;
+    border-radius: $border-radius-sm;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+
+    @include respond-to(phone) {
+        width: 200px;
+        height: 36px;
+    }
+}
+
+.skeletonText {
+    height: 24px;
+    width: 400px;
+    border-radius: $border-radius-sm;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+
+    @include respond-to(phone) {
+        width: 250px;
+        height: 20px;
+    }
+}
+
+.skeletonCard {
+    border-radius: $border-radius-sm;
+    border: 1px solid $subtitle-color;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.skeletonImage {
+    height: 200px;
+    width: 100%;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+}
+
+.skeletonContent {
+    padding: 1rem;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.skeletonCardTitle {
+    height: 28px;
+    width: 80%;
+    margin-bottom: $spacing-xs;
+    border-radius: $border-radius-sm;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+}
+
+.skeletonCardDesc {
+    height: 16px;
+    width: 90%;
+    border-radius: $border-radius-sm;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+    margin-bottom: $spacing-xs;
+
+    &:last-child {
+        width: 70%;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}

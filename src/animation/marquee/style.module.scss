@@ -1,0 +1,45 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    @include flexCenter(row);
+    background-color: $subtitle-color;
+    transition: $animation-secondary;
+
+    &:hover {
+        transition: $animation-secondary;
+        background-color: $title-color;
+
+        .marqueeText {
+            transition: $animation-secondary;
+            color: $white;
+        }
+    }
+
+    &Wrapper {
+        display: flex;
+        position: relative;
+        width: 100%;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transition: $animation-secondary;
+    }
+
+    .marqueeText {
+        font-family: $body-font !important;
+        color: $title-color;
+        white-space: nowrap;
+        font-size: 14px;
+        padding: $spacing-xs $spacing-xl;
+        will-change: transform;
+        animation-delay: -20s;
+        line-height: 1;
+        transition: $animation-secondary;
+    }
+
+
+}

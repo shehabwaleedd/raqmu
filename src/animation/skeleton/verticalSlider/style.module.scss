@@ -1,0 +1,93 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+
+.container {
+    max-width: 1200;
+    margin: 0 auto;
+
+    @include respond-to(large-screen) {
+        max-width: 100%;
+    }
+}
+
+
+.skeletonSlider {
+    display: flex;
+    flex-direction: column;
+    gap: $space-7;
+    width: 100%;
+}
+
+.skeletonTitle {
+    height: 22px;
+    width: 100px;
+    margin-bottom: $spacing-sm;
+    border-radius: $border-radius-sm;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+
+    @include respond-to(phone) {
+        width: 200px;
+        height: 36px;
+    }
+}
+
+
+.skeletonCard {
+    border-radius: $border-radius-sm;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.skeletonImage {
+    height: 200px;
+    width: 100%;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+}
+
+.skeletonContent {
+    padding: $spacing-sm 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.skeletonCardTitle {
+    height: 28px;
+    width: 80%;
+    margin-bottom: $spacing-xs;
+    border-radius: $border-radius-sm;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+}
+
+.skeletonCardDesc {
+    height: 16px;
+    width: 90%;
+    border-radius: $border-radius-sm;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+    margin-bottom: $spacing-xs;
+
+    &:last-child {
+        width: 70%;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}

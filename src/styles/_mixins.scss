@@ -1,0 +1,143 @@
+@use "sass:map";
+@import "@/styles/variables";
+
+$breakpoints: (
+    small-phone: 400px,
+    phone: 480px,
+    small-tablet: 640px,
+    medium-tablet: 788px,
+    large-tablet: 900px,
+    ipad: 1025px,
+    laptop: 1280px,
+    desktop: 1440px,
+    large-screen: 1500px,
+    tv: 1920px,
+    fourk: 2560
+);
+
+$spacings: (
+    xxs: 0.25rem,
+    xs: 0.5rem,
+    sx: 0.75rem,
+    sm: 1rem,
+    ms: 1.25rem,
+    md: 1.5rem,
+    ml: 1.75rem,
+    lg: 2rem,
+    xl: 3rem,
+    xxl: 4rem
+);
+
+
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin grid($columns: 1fr 1fr, $align: center, $justify: center, $gap: $spacing-sm) {
+    display: grid;
+    grid-template-columns: $columns;
+    gap: $gap;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin twoColumnGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-sm;
+}
+
+@mixin absoluteCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin respond-to($breakpoint, $type: max) {
+    @if map.has-key($breakpoints, $breakpoint) {
+        @media (#{$type}-width: map.get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+}
+
+@mixin spacing($size, $property: both) {
+    @if map.has-key($spacings, $size) {
+        @if $property ==both {
+            margin: map.get($spacings, $size);
+            padding: map.get($spacings, $size);
+        }
+
+        @else if $property ==margin {
+            margin: map.get($spacings, $size);
+        }
+
+        @else if $property ==padding {
+            padding: map.get($spacings, $size);
+        }
+    }
+}
+
+@mixin font-style($size, $line-height, $weight: 400) {
+    font: $weight #{$size}/#{$line-height} $title-font;
+}
+
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+
+}
+
+.page {
+    position: relative;
+    z-index: 2;
+    background-color: $background-color;
+    @include flexCenter(column);
+    width: 100%;
+}
+
+
+@function space($key) {
+    @return var(--space-#{$key});
+}
+
+
+.headerWrapper {
+    @include flex(column, center, flex-start);
+    width: 100%;
+    gap: $site-gutter-mobile;
+
+    .eyebrow {
+        font-family: $medium-font;
+    }
+
+    .title {
+        font-size: $size-4;
+
+        @include respond-to(medium-tablet, max) {
+            font-size: $size-3;
+            line-height: 1;
+        }
+    }
+}

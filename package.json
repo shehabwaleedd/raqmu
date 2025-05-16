@@ -10,12 +10,19 @@
     "slicemachine": "start-slicemachine"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@prismicio/client": "^7.17.2",
     "@prismicio/next": "^2.0.1",
     "@prismicio/react": "^3.2.1",
+    "@studio-freight/lenis": "^1.0.42",
+    "@studio-freight/tempus": "^0.0.44",
+    "framer-motion": "^12.12.0",
+    "gsap": "^3.13.0",
     "next": "15.3.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "next-view-transitions": "^0.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.88.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

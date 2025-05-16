@@ -1,0 +1,9 @@
+@import "@/styles/variables";
+
+.blurText {
+    opacity: 0;
+    will-change: filter, opacity;
+    display: block;
+    color: $title-color;
+    transform: translateZ(0);
+}
