@@ -3,5 +3,6 @@
 import dynamic from "next/dynamic";
 
 export const components = {
+  hero_section: dynamic(() => import("./HeroSection")),
   test: dynamic(() => import("./Test")),
 };

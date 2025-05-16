@@ -1,0 +1,339 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.heroSection {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background: $title-color;
+
+    @include respond-to(medium-tablet, max) {
+        height: 70vh;
+        min-height: 500px;
+    }
+}
+
+.embla {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.emblaContainer {
+    @include flex(row, flex-start, flex-start);
+    height: 100%;
+}
+
+.emblaSlide {
+    flex: 0 0 100%;
+    min-width: 0;
+    position: relative;
+    height: 100%;
+}
+
+.slideContent {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    &.transitioning {
+        .slideBackground::before {
+            animation: clipPathReveal 0.6s ease-out forwards;
+        }
+    }
+
+    &.active .slideBackground::before {
+        content: none;
+    }
+}
+
+.slideBackground {
+    @include position(absolute, 0, 0, 0, 0);
+    z-index: 1;
+
+    &::before {
+        content: '';
+        @include position(absolute, 0, 0, 0, 0);
+        background: $title-color;
+        z-index: 10;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+    .backgroundImage,
+    .backgroundVideo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .backgroundVideo {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes clipPathReveal {
+    0% {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+.overlay {
+    @include position(absolute, 0, 0, 0, 0);
+    background: linear-gradient(135deg,
+            rgba($title-color, 0.7) 0%,
+            rgba($title-color, 0.4) 50%,
+            rgba($title-color, 0.2) 100%);
+    z-index: 2;
+}
+
+.slideText {
+    @include position(absolute, 0, 0, 0, 0);
+    z-index: 3;
+    @include flex(column, flex-end, flex-start);
+    padding: $spacing-4xl $spacing-3xl;
+
+    @include respond-to(large-tablet, max) {
+        padding: $spacing-3xl $spacing-xl;
+    }
+
+    @include respond-to(medium-tablet, max) {
+        padding: $spacing-2xl $spacing-lg;
+    }
+
+    &.theme-light {
+        .subheading {
+            color: rgba($white, 0.8);
+        }
+
+        .heading {
+            color: $white;
+        }
+
+        .ctaButton {
+            background: $white;
+            color: $title-color;
+            border: 2px solid $white;
+
+            &:hover {
+                background: transparent;
+                color: $white;
+                border-color: $white;
+            }
+        }
+    }
+
+    &.theme-dark {
+        .subheading {
+            color: rgba($title-color, 0.7);
+        }
+
+        .heading {
+            color: $title-color;
+        }
+
+        .ctaButton {
+            background: $title-color;
+            color: $white;
+            border: 2px solid $title-color;
+
+            &:hover {
+                background: transparent;
+                color: $title-color;
+                border-color: $title-color;
+            }
+        }
+    }
+}
+
+.textContent {
+    max-width: 600px;
+    @include flex(column, flex-start, flex-start);
+    gap: $spacing-lg;
+
+    @include respond-to(medium-tablet, max) {
+        max-width: 100%;
+        gap: $spacing-md;
+    }
+}
+
+.subheading {
+    font-family: $body-font;
+    font-size: $font-size-lg;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+
+    @include respond-to(medium-tablet, max) {
+        font-size: $font-size-base;
+    }
+}
+
+.heading {
+    font-family: $title-font;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+
+    @include respond-to(medium-tablet, max) {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+}
+
+.ctaButton {
+    font-family: $medium-font;
+    font-size: $font-size-base;
+    font-weight: 600;
+    padding: $spacing-md $spacing-xl;
+    border-radius: $border-radius-sm;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 160px;
+    position: relative;
+    overflow: hidden;
+
+    @include respond-to(medium-tablet, max) {
+        padding: $spacing-sm $spacing-lg;
+        font-size: $font-size-sm;
+        min-width: 140px;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.navigationButton {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba($white, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba($white, 0.2);
+    color: $white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    @include flexCenter(row);
+    z-index: 100;
+
+    @include respond-to(medium-tablet, max) {
+        width: 50px;
+        height: 50px;
+        display: none;
+    }
+
+    svg {
+        width: 28px;
+        height: 28px;
+
+        @include respond-to(medium-tablet, max) {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    &:hover {
+        background: rgba($white, 0.25);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    &:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+
+    &.prevButton {
+        left: $spacing-xl;
+
+        @include respond-to(large-tablet, max) {
+            left: $spacing-lg;
+        }
+    }
+
+    &.nextButton {
+        right: $spacing-xl;
+
+        @include respond-to(large-tablet, max) {
+            right: $spacing-lg;
+        }
+    }
+}
+
+.pagination {
+    @include position(absolute, auto, auto, $spacing-xl, 50%);
+    transform: translateX(-50%);
+    @include flex(row, center, center);
+    gap: $spacing-sm;
+    z-index: 4;
+
+    @include respond-to(medium-tablet, max) {
+        bottom: $spacing-lg;
+    }
+}
+
+.paginationDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba($white, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.active {
+        background: $white;
+        transform: scale(1.2);
+    }
+
+    &:hover {
+        background: rgba($white, 0.7);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .slideContent.transitioning .slideBackground::before {
+        animation: none;
+        content: none;
+    }
+
+    .slideText,
+    .ctaButton,
+    .navigationButton,
+    .paginationDot {
+        transition: none;
+    }
+
+    .backgroundVideo {
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .navigationButton {
+        display: none;
+    }
+
+    .pagination {
+        bottom: $spacing-md;
+    }
+}

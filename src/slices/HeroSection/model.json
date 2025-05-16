@@ -1,0 +1,124 @@
+{
+  "id": "hero_section",
+  "type": "SharedSlice",
+  "name": "HeroSection",
+  "description": "Modern hero slider with image/video backgrounds",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Hero slider with multiple slides",
+      "imageUrl": "",
+      "primary": {
+        "slides": {
+          "type": "Group",
+          "config": {
+            "label": "Hero Slides",
+            "repeat": true,
+            "fields": {
+              "slide_type": {
+                "type": "Select",
+                "config": {
+                  "label": "Background Type",
+                  "placeholder": "Select background type",
+                  "options": [
+                    "image",
+                    "video"
+                  ],
+                  "default_value": "image"
+                }
+              },
+              "background_image": {
+                "type": "Image",
+                "config": {
+                  "label": "Background Image",
+                  "constraint": {
+                    "width": 1920,
+                    "height": 1080
+                  },
+                  "thumbnails": [
+                    {
+                      "name": "mobile",
+                      "width": 768,
+                      "height": 1024
+                    }
+                  ]
+                }
+              },
+              "background_video": {
+                "type": "Link",
+                "config": {
+                  "label": "Background Video URL",
+                  "placeholder": "Enter video URL (MP4)",
+                  "select": "media"
+                }
+              },
+              "video_poster": {
+                "type": "Image",
+                "config": {
+                  "label": "Video Poster Image",
+                  "constraint": {
+                    "width": 1920,
+                    "height": 1080
+                  }
+                }
+              },
+              "heading": {
+                "type": "Text",
+                "config": {
+                  "label": "Main Heading",
+                  "placeholder": "Enter main heading"
+                }
+              },
+              "subheading": {
+                "type": "Text",
+                "config": {
+                  "label": "Subheading",
+                  "placeholder": "Enter subheading"
+                }
+              },
+              "cta_text": {
+                "type": "Text",
+                "config": {
+                  "label": "CTA Button Text",
+                  "placeholder": "Get Started"
+                }
+              },
+              "cta_link": {
+                "type": "Link",
+                "config": {
+                  "label": "CTA Link",
+                  "placeholder": "/contact",
+                  "allowTargetBlank": true,
+                  "select": null
+                }
+              },
+              "text_color": {
+                "type": "Select",
+                "config": {
+                  "label": "Text Color Theme",
+                  "placeholder": "Select text color",
+                  "options": [
+                    "light",
+                    "dark"
+                  ],
+                  "default_value": "light"
+                }
+              },
+              "overlay_opacity": {
+                "type": "Number",
+                "config": {
+                  "label": "Overlay Opacity (0-100)",
+                  "placeholder": "40"
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

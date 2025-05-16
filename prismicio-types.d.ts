@@ -429,6 +429,166 @@ export type SettingsDocument<Lang extends string = string> =
 export type AllDocumentTypes = PageDocument | SettingsDocument;
 
 /**
+ * Item in *HeroSection → Default → Primary → Hero Slides*
+ */
+export interface HeroSectionSliceDefaultPrimarySlidesItem {
+  /**
+   * Background Type field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select background type
+   * - **Default Value**: image
+   * - **API ID Path**: hero_section.default.primary.slides[].slide_type
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  slide_type: prismic.SelectField<"image" | "video", "filled">;
+
+  /**
+   * Background Image field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_section.default.primary.slides[].background_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  background_image: prismic.ImageField<"mobile">;
+
+  /**
+   * Background Video URL field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: Enter video URL (MP4)
+   * - **API ID Path**: hero_section.default.primary.slides[].background_video
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  background_video: prismic.LinkToMediaField<prismic.FieldState, never>;
+
+  /**
+   * Video Poster Image field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_section.default.primary.slides[].video_poster
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  video_poster: prismic.ImageField<never>;
+
+  /**
+   * Main Heading field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter main heading
+   * - **API ID Path**: hero_section.default.primary.slides[].heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Subheading field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter subheading
+   * - **API ID Path**: hero_section.default.primary.slides[].subheading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  subheading: prismic.KeyTextField;
+
+  /**
+   * CTA Button Text field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Get Started
+   * - **API ID Path**: hero_section.default.primary.slides[].cta_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  cta_text: prismic.KeyTextField;
+
+  /**
+   * CTA Link field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: /contact
+   * - **API ID Path**: hero_section.default.primary.slides[].cta_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Text Color Theme field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select text color
+   * - **Default Value**: light
+   * - **API ID Path**: hero_section.default.primary.slides[].text_color
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  text_color: prismic.SelectField<"light" | "dark", "filled">;
+
+  /**
+   * Overlay Opacity (0-100) field in *HeroSection → Default → Primary → Hero Slides*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 40
+   * - **API ID Path**: hero_section.default.primary.slides[].overlay_opacity
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  overlay_opacity: prismic.NumberField;
+}
+
+/**
+ * Primary content in *HeroSection → Default → Primary*
+ */
+export interface HeroSectionSliceDefaultPrimary {
+  /**
+   * Hero Slides field in *HeroSection → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_section.default.primary.slides[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  slides: prismic.GroupField<
+    Simplify<HeroSectionSliceDefaultPrimarySlidesItem>
+  >;
+}
+
+/**
+ * Default variation for HeroSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Hero slider with multiple slides
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSectionSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<HeroSectionSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *HeroSection*
+ */
+type HeroSectionSliceVariation = HeroSectionSliceDefault;
+
+/**
+ * HeroSection Shared Slice
+ *
+ * - **API ID**: `hero_section`
+ * - **Description**: Modern hero slider with image/video backgrounds
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HeroSectionSlice = prismic.SharedSlice<
+  "hero_section",
+  HeroSectionSliceVariation
+>;
+
+/**
  * Default variation for Test Slice
  *
  * - **API ID**: `default`
@@ -489,6 +649,11 @@ declare module "@prismicio/client" {
       SettingsDocumentDataContactInformationItem,
       SettingsDocumentDataFooterLegalLinksItem,
       AllDocumentTypes,
+      HeroSectionSlice,
+      HeroSectionSliceDefaultPrimarySlidesItem,
+      HeroSectionSliceDefaultPrimary,
+      HeroSectionSliceVariation,
+      HeroSectionSliceDefault,
       TestSlice,
       TestSliceVariation,
       TestSliceDefault,

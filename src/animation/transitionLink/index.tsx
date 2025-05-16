@@ -9,10 +9,18 @@ import { LinkField } from '@prismicio/client';
 const getLinkUrl = (link: string | LinkField | undefined): string => {
     if (!link) return '';
     if (typeof link === 'string') return link;
+    
     if ('link_type' in link) {
-        if (link.link_type === 'Web') return link.url || '';
-        else if (link.link_type === 'Document') return link.uid ? `/${link.uid}` : '/';
-        else if (link.link_type === 'Media') return link.url || '';
+        switch (link.link_type) {
+            case 'Web':
+                return link.url || '';
+            case 'Document':
+                return link.uid ? `/${link.uid}` : '/';
+            case 'Media':
+                return link.url || '';
+            default:
+                return '';
+        }
     }
     return '';
 };
@@ -107,7 +115,7 @@ const TransitionLink = forwardRef<HTMLAnchorElement, TransitionLinkProps>(
         }
 
         return (
-            <Link ref={ref} href={hrefString} className={className} onClick={handleClick}{...props}>
+            <Link ref={ref} href={hrefString} className={className} onClick={handleClick} {...props}>
                 {children}
             </Link>
         );
