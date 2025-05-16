@@ -152,6 +152,17 @@ type ProjectPostDocumentDataSlicesSlice = never;
  */
 interface ProjectPostDocumentData {
   /**
+   * Client Name field in *Project Post*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Client's Name (Must)
+   * - **API ID Path**: project_post.client_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  client_name: prismic.KeyTextField;
+
+  /**
    * Description field in *Project Post*
    *
    * - **Field Type**: Rich Text
@@ -163,15 +174,15 @@ interface ProjectPostDocumentData {
   description: prismic.RichTextField;
 
   /**
-   * Client Name field in *Project Post*
+   * Project Main Image field in *Project Post*
    *
-   * - **Field Type**: Text
-   * - **Placeholder**: Please Enter Client's Name (Must)
-   * - **API ID Path**: project_post.client_name
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.project_main_image
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#key-text
+   * - **Documentation**: https://prismic.io/docs/field#image
    */
-  client_name: prismic.KeyTextField;
+  project_main_image: prismic.ImageField<never>;
 
   /**
    * Year field in *Project Post*
@@ -285,6 +296,17 @@ interface ProjectPostDocumentData {
   gallery_images: prismic.GroupField<
     Simplify<ProjectPostDocumentDataGalleryImagesItem>
   >;
+
+  /**
+   * Next Project field in *Project Post*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.next_project
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  next_project: prismic.ContentRelationshipField<"project_post">;
 
   /**
    * Slice Zone field in *Project Post*

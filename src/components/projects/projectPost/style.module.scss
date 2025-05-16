@@ -1,0 +1,123 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.projectPost {
+    background-color: $white;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: $container-max-width-xxl;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: $spacing-4xl;
+    padding: $spacing-4xl $site-margin-desktop;
+
+    @include respond-to(large-tablet) {
+        grid-template-columns: 1fr;
+        padding: $spacing-3xl $site-margin-mobile;
+        gap: $spacing-3xl;
+    }
+}
+
+.sidebar {
+    position: sticky;
+    top: $spacing-4xl;
+    height: fit-content;
+
+    @include respond-to(large-tablet) {
+        position: static;
+        order: 2;
+    }
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+}
+
+.metaItem {
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+.metaLabel {
+    display: block;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    color: $text-gray;
+    margin-bottom: $spacing-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metaValue {
+    display: block;
+    font-family: $body-font;
+    font-size: $body-font-size;
+    color: $title-color;
+    font-weight: $medium-font-weight;
+}
+
+.content {
+    @include respond-to(large-tablet) {
+        order: 1;
+    }
+}
+
+.mainImage {
+    margin: $spacing-3xl 0 $spacing-4xl;
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+}
+
+.description {
+    margin-bottom: $spacing-5xl;
+
+    :global(p) {
+        font-family: $body-font;
+        font-size: $body-font-size;
+        line-height: 1.6;
+        color: $text-color;
+        margin-bottom: $spacing-md;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    :global(h1),
+    :global(h2),
+    :global(h3),
+    :global(h4),
+    :global(h5),
+    :global(h6) {
+        font-family: $title-font;
+        color: $title-color;
+        margin-bottom: $spacing-md;
+        line-height: 1.2;
+    }
+
+    :global(h1) {
+        font-size: $bigger-font-size;
+    }
+
+    :global(h2) {
+        font-size: $big-font-size;
+    }
+
+    :global(h3) {
+        font-size: $medium-font-size;
+    }
+}

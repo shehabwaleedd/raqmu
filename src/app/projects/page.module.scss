@@ -1,0 +1,43 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.projectsPage {
+    background-color: $white;
+    min-height: 100vh;
+    padding: $spacing-4xl 0;
+}
+
+.container {
+    max-width: $container-max-width-xxl;
+    margin: 0 auto;
+    padding: 0 $site-margin-desktop;
+
+    @include respond-to(medium-tablet) {
+        padding: 0 $site-margin-mobile;
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: $spacing-5xl;
+}
+
+.title {
+    font-family: $title-font;
+    font-size: $biggest-font-size;
+    font-weight: $bold-font-weight;
+    color: $title-color;
+    margin-bottom: $spacing-lg;
+
+    @include respond-to(medium-tablet) {
+        font-size: $bigger-font-size;
+    }
+}
+
+.subtitle {
+    font-family: $body-font;
+    font-size: $medium-font-size;
+    color: $text-color;
+    max-width: 600px;
+    margin: 0 auto;
+}

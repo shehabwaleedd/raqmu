@@ -1,0 +1,31 @@
+@import '@/styles/variables';
+
+.breadcrumbs {
+    margin-bottom: $spacing-xl;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+}
+
+.link {
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    color: $text-gray;
+    text-decoration: none;
+    transition: $transition-fast;
+
+    &:hover {
+        color: $accent-color;
+    }
+}
+
+.separator {
+    color: $text-gray;
+    font-size: $small-font-size;
+}
+
+.current {
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    color: $title-color;
+}

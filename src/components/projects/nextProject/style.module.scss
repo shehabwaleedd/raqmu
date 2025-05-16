@@ -1,0 +1,80 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.nextProject {
+    margin-top: $spacing-5xl;
+}
+
+.link {
+    display: block;
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: $transition-normal;
+
+    &:hover {
+        .background img {
+            scale: 1.1;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .title {
+            transform: translateY(-10px);
+        }
+    }
+}
+
+.background {
+    @include position(absolute, 0, null, null, 0);
+    width: 100%;
+    height: 100%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: $transition-primary;
+    }
+}
+
+.overlay {
+    @include position(absolute, 0, null, null, 0);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: $transition-normal;
+}
+
+.content {
+    @include position(absolute, 50%, null, null, 50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+.label {
+    display: block;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: $spacing-sm;
+    opacity: 0.8;
+}
+
+.title {
+    font-family: $title-font;
+    font-size: $bigger-font-size;
+    font-weight: $bold-font-weight;
+    margin: 0;
+    transition: $transition-normal;
+
+    @include respond-to(medium-tablet) {
+        font-size: $big-font-size;
+    }
+}

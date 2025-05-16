@@ -1,0 +1,126 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.gallery {
+    margin-bottom: $spacing-5xl;
+}
+
+.title {
+    font-family: $title-font;
+    font-size: $big-font-size;
+    color: $title-color;
+    margin-bottom: $spacing-3xl;
+    font-weight: $bold-font-weight;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-lg;
+
+    @include respond-to(phone) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-sm;
+    }
+}
+
+.item {
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: $border-radius-sm;
+    transition: $transition-normal;
+
+    &:hover {
+        transform: scale(1.02);
+        box-shadow: $box-shadow-lg;
+    }
+
+    img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        display: block;
+        transition: $transition-normal;
+    }
+
+    &:hover img {
+        scale: 1.05;
+    }
+}
+
+.modal {
+    @include position(fixed, 0, null, null, 0);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: $z-index-modal;
+    @include flexCenter(row);
+    backdrop-filter: blur(10px);
+}
+
+.modalContent {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    @include flexCenter(row);
+}
+
+.modalImage {
+    img {
+        max-width: 90vw;
+        max-height: 90vh;
+        object-fit: contain;
+        display: block;
+    }
+}
+
+.close {
+    @include position(absolute, $spacing-lg, $spacing-lg, null, null);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius-full;
+    @include flexCenter(row);
+    cursor: pointer;
+    transition: $transition-normal;
+    z-index: 1;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.7);
+        transform: scale(1.1);
+    }
+}
+
+.nav {
+    @include position(absolute, 50%, null, null, null);
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius-full;
+    @include flexCenter(row);
+    cursor: pointer;
+    transition: $transition-normal;
+
+    &:hover:not(:disabled) {
+        background: rgba(0, 0, 0, 0.7);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    &Prev {
+        left: $spacing-lg;
+    }
+
+    &Next {
+        right: $spacing-lg;
+    }
+}

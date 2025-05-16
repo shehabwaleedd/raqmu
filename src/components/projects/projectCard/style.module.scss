@@ -1,0 +1,70 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.card {
+    background-color: $white;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    transition: $transition-normal;
+    box-shadow: $box-shadow-sm;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: $box-shadow-lg;
+    }
+}
+
+.link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.imageWrapper {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: $transition-primary;
+    }
+
+    .card:hover & img {
+        scale: 1.05;
+    }
+}
+
+.content {
+    padding: $spacing-xl;
+}
+
+.title {
+    font-family: $title-font;
+    font-size: $medium-font-size;
+    font-weight: $bold-font-weight;
+    color: $title-color;
+    margin-bottom: $spacing-sm;
+    line-height: 1.2;
+}
+
+.meta {
+    @include flex(row, space-between, center);
+    gap: $spacing-sm;
+}
+
+.sector,
+.year {
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    color: $text-gray;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.year {
+    color: $accent-color;
+    font-weight: $semi-bold-font-weight;
+}

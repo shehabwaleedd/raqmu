@@ -12,6 +12,13 @@
           "label": "UID"
         }
       },
+      "client_name": {
+        "type": "Text",
+        "config": {
+          "label": "Client Name",
+          "placeholder": "Please Enter Client's Name (Must)"
+        }
+      },
       "description": {
         "type": "StructuredText",
         "config": {
@@ -21,11 +28,12 @@
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
         }
       },
-      "client_name": {
-        "type": "Text",
+      "project_main_image": {
+        "type": "Image",
         "config": {
-          "label": "Client Name",
-          "placeholder": "Please Enter Client's Name (Must)"
+          "label": "Project Main Image",
+          "constraint": {},
+          "thumbnails": []
         }
       },
       "year": {
@@ -126,6 +134,15 @@
               }
             }
           }
+        }
+      },
+      "next_project": {
+        "type": "Link",
+        "config": {
+          "label": "Next Project",
+          "select": "document",
+          "repeat": false,
+          "customtypes": ["project_post"]
         }
       },
       "slices": {

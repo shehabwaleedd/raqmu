@@ -1,0 +1,93 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-4xl;
+    padding: $spacing-3xl;
+    background-color: $brand-gray;
+    border-radius: $border-radius-lg;
+
+    @include respond-to(medium-tablet) {
+        grid-template-columns: 1fr;
+        gap: $spacing-md;
+        padding: $spacing-xl;
+    }
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+}
+
+.filterLabel {
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    color: $title-color;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.select {
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-sm;
+    background-color: $white;
+    font-family: $body-font;
+    font-size: $normal-font-size;
+    color: $title-color;
+    transition: $transition-fast;
+
+    &:focus {
+        outline: none;
+        border-color: $accent-color;
+        box-shadow: 0 0 0 3px rgba($accent-color, 0.1);
+    }
+}
+
+.clearButton {
+    grid-column: 1 / -1;
+    justify-self: center;
+    padding: $spacing-sm $spacing-lg;
+    background-color: $accent-color;
+    color: $white;
+    border: none;
+    border-radius: $border-radius-sm;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+        background-color: darken($accent-color, 10%);
+        transform: translateY(-2px);
+    }
+}
+
+.results {
+    margin-bottom: $spacing-xl;
+}
+
+.count {
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    color: $text-gray;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-3xl;
+
+    @include respond-to(large-tablet) {
+        grid-template-columns: 1fr;
+        gap: $spacing-xl;
+    }
+}
