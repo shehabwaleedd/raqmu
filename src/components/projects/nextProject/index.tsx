@@ -1,17 +1,21 @@
+import { Content, isFilled, ContentRelationshipField } from '@prismicio/client';
 import { createClient } from '@/prismicio';
-import { Content } from '@prismicio/client';
 import { PrismicNextImage, PrismicNextLink } from '@prismicio/next';
 import styles from './style.module.scss';
 
 interface NextProjectProps {
-    projectUid: string;
+    project: ContentRelationshipField<"project_post", string, unknown>;
 }
 
-export default async function NextProject({ projectUid }: NextProjectProps) {
+export default async function NextProject({ project }: NextProjectProps) {
+    if (!isFilled.contentRelationship(project)) {
+        return null;
+    }
+
     const client = createClient();
 
     try {
-        const nextProject = await client.getByUID<Content.ProjectPostDocument>('project_post', projectUid);
+        const nextProject = await client.getByUID<Content.ProjectPostDocument>('project_post', project.uid!);
 
         return (
             <div className={styles.nextProject}>

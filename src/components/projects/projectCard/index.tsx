@@ -1,5 +1,6 @@
 import { Content } from '@prismicio/client';
-import { PrismicNextImage, PrismicNextLink } from '@prismicio/next';
+import { PrismicNextImage } from '@prismicio/next';
+import TransitionLink from '@/animation/transitionLink';
 import styles from './style.module.scss';
 
 interface ProjectCardProps {
@@ -9,7 +10,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
     return (
         <article className={styles.card}>
-            <PrismicNextLink document={project} className={styles.link}>
+            <TransitionLink href={`/projects/${project.uid}`} className={styles.link}>
                 <div className={styles.imageWrapper}>
                     <PrismicNextImage
                         field={project.data.project_main_image}
@@ -23,7 +24,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                         <span className={styles.year}>{project.data.year}</span>
                     </div>
                 </div>
-            </PrismicNextLink>
+            </TransitionLink>
         </article>
     );
 }

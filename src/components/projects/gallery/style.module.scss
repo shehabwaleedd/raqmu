@@ -2,57 +2,169 @@
 @import '@/styles/mixins';
 
 .gallery {
-    margin-bottom: $spacing-5xl;
+    margin-bottom: $spacing-4xl;
 }
 
 .title {
     font-family: $title-font;
     font-size: $big-font-size;
     color: $title-color;
-    margin-bottom: $spacing-3xl;
+    margin-bottom: $spacing-xl;
     font-weight: $bold-font-weight;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: $spacing-lg;
-
-    @include respond-to(phone) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: $spacing-sm;
-    }
+.embla {
+    max-width: 100%;
+    margin: 0;
 }
 
-.item {
-    cursor: pointer;
+.emblaViewport {
     overflow: hidden;
     border-radius: $border-radius-sm;
+}
+
+.emblaContainer {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: -$spacing-sm;
+}
+
+.emblaSlide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 100%;
+    min-width: 0;
+    padding-left: $spacing-sm;
+}
+
+.emblaSlideInner {
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
     transition: $transition-normal;
 
     &:hover {
-        transform: scale(1.02);
-        box-shadow: $box-shadow-lg;
+        .emblaSlideOverlay {
+            opacity: 1;
+        }
     }
 
-    img {
-        width: 100%;
+    @include respond-to(medium-tablet) {
+        height: 300px;
+    }
+
+    @include respond-to(phone) {
         height: 250px;
-        object-fit: cover;
-        display: block;
-        transition: $transition-normal;
-    }
-
-    &:hover img {
-        scale: 1.05;
     }
 }
 
+.emblaSlideImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.emblaSlideOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    @include flexCenter(row);
+    opacity: 0;
+    transition: $transition-normal;
+
+    .expandIcon {
+        color: white;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+}
+
+.emblaThumbs {
+    margin-top: $spacing-lg;
+}
+
+.emblaThumbsViewport {
+    overflow: hidden;
+}
+
+.emblaThumbsContainer {
+    display: flex;
+    flex-direction: row;
+    margin-left: -$spacing-xs;
+}
+
+.emblaThumb {
+    flex: 0 0 80px;
+    min-width: 0;
+    padding-left: $spacing-xs;
+
+    @include respond-to(medium-tablet) {
+        flex: 0 0 70px;
+    }
+
+    @include respond-to(phone) {
+        flex: 0 0 60px;
+    }
+
+    &.selected .emblaThumbButton {
+        opacity: 1;
+        transform: scale(1);
+        border-color: $accent-color;
+    }
+}
+
+.emblaThumbButton {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 60px;
+    border-radius: $border-radius-sm;
+    overflow: hidden;
+    opacity: 0.7;
+    transform: scale(0.95);
+    transition: $transition-fast;
+
+    &:hover {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    @include respond-to(medium-tablet) {
+        height: 50px;
+    }
+
+    @include respond-to(phone) {
+        height: 40px;
+    }
+}
+
+.emblaThumbImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .modal {
-    @include position(fixed, 0, null, null, 0);
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.95);
     z-index: $z-index-modal;
     @include flexCenter(row);
     backdrop-filter: blur(10px);
@@ -60,23 +172,32 @@
 
 .modalContent {
     position: relative;
-    max-width: 90vw;
-    max-height: 90vh;
+    width: 90vw;
+    height: 90vh;
+    @include flexCenter(row);
+}
+
+.modalImageWrapper {
+    width: 100%;
+    height: 100%;
     @include flexCenter(row);
 }
 
 .modalImage {
-    img {
-        max-width: 90vw;
-        max-height: 90vh;
-        object-fit: contain;
-        display: block;
-    }
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: $border-radius-sm;
+    box-shadow: $box-shadow-xxl;
 }
 
-.close {
-    @include position(absolute, $spacing-lg, $spacing-lg, null, null);
-    background: rgba(0, 0, 0, 0.5);
+.modalClose {
+    position: absolute;
+    top: $spacing-lg;
+    right: $spacing-lg;
+    background: rgba(0, 0, 0, 0.7);
     border: none;
     color: white;
     width: 48px;
@@ -88,26 +209,34 @@
     z-index: 1;
 
     &:hover {
-        background: rgba(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.9);
         transform: scale(1.1);
+    }
+
+    @include respond-to(phone) {
+        top: $spacing-md;
+        right: $spacing-md;
+        width: 40px;
+        height: 40px;
     }
 }
 
-.nav {
-    @include position(absolute, 50%, null, null, null);
+.modalNav {
+    position: absolute;
+    top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     border: none;
     color: white;
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     border-radius: $border-radius-full;
     @include flexCenter(row);
     cursor: pointer;
     transition: $transition-normal;
 
     &:hover:not(:disabled) {
-        background: rgba(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.9);
         transform: translateY(-50%) scale(1.1);
     }
 
@@ -122,5 +251,37 @@
 
     &Next {
         right: $spacing-lg;
+    }
+
+    @include respond-to(phone) {
+        width: 44px;
+        height: 44px;
+
+        &Prev {
+            left: $spacing-md;
+        }
+
+        &Next {
+            right: $spacing-md;
+        }
+    }
+}
+
+.modalCounter {
+    position: absolute;
+    bottom: $spacing-lg;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius-sm;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    backdrop-filter: blur(10px);
+
+    @include respond-to(phone) {
+        bottom: $spacing-md;
+        font-size: $extra-small-font-size;
     }
 }

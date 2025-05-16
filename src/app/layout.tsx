@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.scss";
 import { ViewTransitions } from "next-view-transitions";
 import SmoothScroller from "@/animation/SmoothScrolling";
 import Navigation from "@/components/navbar";

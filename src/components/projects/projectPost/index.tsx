@@ -1,6 +1,6 @@
 'use client';
 
-import { Content } from '@prismicio/client';
+import { Content, isFilled } from '@prismicio/client';
 import { PrismicRichText } from '@prismicio/react';
 import { PrismicNextImage } from '@prismicio/next';
 import Breadcrumbs from '@/components/projects/breadCrumbs';
@@ -53,11 +53,7 @@ export default function ProjectPost({ project }: ProjectPostProps) {
                     <Breadcrumbs clientName={data.client_name as string} />
 
                     <div className={styles.mainImage}>
-                        <PrismicNextImage
-                            field={data.project_main_image}
-                            sizes="(max-width: 768px) 100vw, 70vw"
-                            priority
-                        />
+                        <PrismicNextImage field={data.project_main_image}sizes="(max-width: 768px) 100vw, 70vw"priority/>
                     </div>
 
                     <div className={styles.description}>
@@ -70,8 +66,8 @@ export default function ProjectPost({ project }: ProjectPostProps) {
                 </main>
             </div>
 
-            {data.next_project && data.next_project.uid && (
-                <NextProject projectUid={data.next_project.uid} />
+            {isFilled.contentRelationship(data.next_project) && (
+                <NextProject project={data.next_project} />
             )}
         </div>
     );

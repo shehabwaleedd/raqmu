@@ -17,26 +17,39 @@ export default async function ProjectsPage() {
         ]
     });
 
-    const sectors = [...new Set(projects.map(p => p.data.sector).filter(Boolean))];
-    const subSectors = [...new Set(projects.map(p => p.data.sub_sector).filter(Boolean))];
-    const locations = [...new Set(projects.map(p => p.data.location).filter(Boolean))];
+    const sectors = [...new Set(
+        projects
+            .map(p => p.data.sector as string)
+            .filter(Boolean)
+    )];
+
+    const subSectors = [...new Set(
+        projects
+            .map(p => p.data.sub_sector as string)
+            .filter(Boolean)
+    )];
+
+    const locations = [...new Set(
+        projects
+            .map(p => p.data.location as string)
+            .filter(Boolean)
+    )];
 
     return (
         <div className={styles.projectsPage}>
             <div className={styles.container}>
                 <header className={styles.header}>
-                    <h1 className={styles.title}>Our Projects</h1>
-                    <p className={styles.subtitle}>
-                        Explore our portfolio of prestigious construction projects across Egypt
-                    </p>
+                    <div className={styles.headerContent}>
+                        <span className={styles.eyebrow}>Portfolio</span>
+                        <h1 className={styles.title}>Our Projects</h1>
+                        <p className={styles.subtitle}>
+                            Discover our comprehensive portfolio of prestigious construction projects across Egypt,
+                            showcasing excellence in every sector from commercial to residential developments.
+                        </p>
+                    </div>
                 </header>
 
-                <ProjectsClient
-                    projects={projects}
-                    sectors={sectors}
-                    subSectors={subSectors}
-                    locations={locations}
-                />
+                <ProjectsClient projects={projects}sectors={sectors}subSectors={subSectors}locations={locations}/>
             </div>
         </div>
     );

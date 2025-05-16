@@ -1,5 +1,5 @@
-import styles from './style.module.scss';
 import TransitionLink from '@/animation/transitionLink';
+import styles from './style.module.scss';
 
 interface BreadcrumbsProps {
     clientName: string;

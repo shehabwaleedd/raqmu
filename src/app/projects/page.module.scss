@@ -4,7 +4,7 @@
 .projectsPage {
     background-color: $white;
     min-height: 100vh;
-    padding: $spacing-4xl 0;
+    padding-top: $spacing-4xl;
 }
 
 .container {
@@ -20,24 +20,42 @@
 .header {
     text-align: center;
     margin-bottom: $spacing-5xl;
+    position: relative;
+
+    @include respond-to(medium-tablet) {
+        margin-bottom: $spacing-4xl;
+    }
+}
+
+.headerContent {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.eyebrow {
+    display: inline-block;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: $accent-color;
+    margin-bottom: $spacing-md;
+    opacity: 0.8;
 }
 
 .title {
     font-family: $title-font;
-    font-size: $biggest-font-size;
+    font-size: clamp(3rem, 8vw, 5.5rem);
     font-weight: $bold-font-weight;
     color: $title-color;
     margin-bottom: $spacing-lg;
-
-    @include respond-to(medium-tablet) {
-        font-size: $bigger-font-size;
-    }
+    line-height: 1.1;
 }
 
 .subtitle {
     font-family: $body-font;
-    font-size: $medium-font-size;
+    font-size: $body-font-size;
     color: $text-color;
-    max-width: 600px;
-    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
 }
