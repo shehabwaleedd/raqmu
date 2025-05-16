@@ -38,12 +38,6 @@
     width: 100%;
     overflow: hidden;
 
-    &.transitioning {
-        .slideBackground::before {
-            animation: clipPathReveal 0.6s ease-out forwards;
-        }
-    }
-
     &.active .slideBackground::before {
         content: none;
     }
@@ -52,14 +46,7 @@
 .slideBackground {
     @include position(absolute, 0, 0, 0, 0);
     z-index: 1;
-
-    &::before {
-        content: '';
-        @include position(absolute, 0, 0, 0, 0);
-        background: $title-color;
-        z-index: 10;
-        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-    }
+    overflow: hidden;
 
     .backgroundImage,
     .backgroundVideo {
@@ -74,14 +61,18 @@
     }
 }
 
-@keyframes clipPathReveal {
-    0% {
-        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-    }
+.parallaxLayer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
-    100% {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
+.parallaxContent {
+    max-width: none;
+    flex: 0 0 115%;
+    object-fit: cover;
 }
 
 .overlay {
@@ -279,47 +270,11 @@
     }
 }
 
-.pagination {
-    @include position(absolute, auto, auto, $spacing-xl, 50%);
-    transform: translateX(-50%);
-    @include flex(row, center, center);
-    gap: $spacing-sm;
-    z-index: 4;
-
-    @include respond-to(medium-tablet, max) {
-        bottom: $spacing-lg;
-    }
-}
-
-.paginationDot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba($white, 0.4);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &.active {
-        background: $white;
-        transform: scale(1.2);
-    }
-
-    &:hover {
-        background: rgba($white, 0.7);
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .slideContent.transitioning .slideBackground::before {
-        animation: none;
-        content: none;
-    }
 
     .slideText,
     .ctaButton,
-    .navigationButton,
-    .paginationDot {
+    .navigationButton {
         transition: none;
     }
 
@@ -331,9 +286,5 @@
 @media (max-width: 480px) {
     .navigationButton {
         display: none;
-    }
-
-    .pagination {
-        bottom: $spacing-md;
     }
 }
