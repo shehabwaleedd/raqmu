@@ -2,295 +2,205 @@
 @import "@/styles/variables";
 @import "@/styles/mixins";
 
-.navbar {
+.navbarWrapper {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
-    background: rgba($white, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba($title-color, 0.1);
-    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: $spacing-xs;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
     &.scrolled {
-        background: rgba($white, 0.98);
-        backdrop-filter: blur(25px);
-        box-shadow: 0 2px 20px rgba($title-color, 0.1);
+        padding: $spacing-md 0;
+        background: rgba($white, 0.8);
+        backdrop-filter: blur(20px);
     }
+}
 
-    .container {
-        @include flex(row, space-between, center);
-        max-width: $container-max-width-xl;
-        margin: 0 auto;
-        padding: 0 $site-margin-desktop;
-        height: $nav-height;
+.navbar {
+    position: relative;
+    background: $white;
+    backdrop-filter: blur(10px);
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba($title-color, 0.1);
+    box-shadow: 
+        0 4px 6px -1px rgba($title-color, 0.1),
+        0 2px 4px -1px rgba($title-color, 0.06);
+    max-width: none;
+    margin: 0;
+    
 
-        @include respond-to(medium-tablet, max) {
-            padding: 0 $site-margin-mobile;
-        }
+}
+
+.container {
+    @include flex(row, space-between, center);
+    padding: 0 $spacing-xl;
+    height: 4.5rem;
+    max-width: 100%;
+    margin: 0 auto;
+
+    @include respond-to(medium-tablet, max) {
+        padding: 0 $spacing-lg;
     }
+}
 
-    .logo {
-        @include flex(row, center, center);
-        height: 100%;
+.logo {
+    @include flex(row, center, center);
+    height: 100%;
 
-        img {
-            height: auto;
-            width: auto;
-            max-height: 32px;
-        }
+    img {
+        width: 100%;
+        height: 17vh;
+        object-fit: contain;
     }
+}
 
-    .desktopNav {
-        @include respond-to(medium-tablet, max) {
-            display: none;
-        }
+.menuContainer {
+    @include flex(row, center, center);
+    gap: $spacing-md;
 
-        .navList {
-            @include flex(row, center, center);
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            gap: $spacing-xl;
-        }
-
-        .navItem {
-            position: relative;
-        }
-
-        .navLink {
-            background: none;
-            border: none;
-            font-family: $medium-font;
-            font-size: $font-size-base;
-            color: $title-color;
-            cursor: pointer;
-            padding: $spacing-sm $spacing-md;
-            border-radius: $border-radius-sm;
-            transition: all 0.2s ease;
-            position: relative;
-
-            &:hover {
-                color: $accent-color;
-                background: rgba($accent-color, 0.1);
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: -8px;
-                left: 50%;
-                width: 0;
-                height: 2px;
-                background: $accent-color;
-                transform: translateX(-50%);
-                transition: width 0.3s ease;
-            }
-
-            &:hover::after {
-                width: 80%;
-            }
-        }
-    }
-
-    .mobileToggle {
+    @include respond-to(medium-tablet, max) {
         display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: $spacing-xs;
+    }
+}
 
-        @include respond-to(medium-tablet, max) {
-            display: block;
+.menuItem {
+    position: relative;
+}
+
+.menuLink {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $title-color;
+    font-family: $medium-font;
+    font-size: $font-size-base;
+    font-weight: 500;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+        background: rgba($title-color, 0.05);
+    }
+}
+
+.submenuWrapper {
+    position: absolute;
+    top: calc(100% + 1.2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: $spacing-md;
+    z-index: 100;
+}
+
+.submenu {
+    background: $white;
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba($title-color, 0.1);
+    box-shadow: 
+        0 25px 50px -12px rgba($title-color, 0.25),
+        0 10px 25px -12px rgba($title-color, 0.15);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $white;
+        border-radius: inherit;
+        z-index: -1;
+    }
+}
+
+.submenuContent {
+    width: max-content;
+    height: auto;
+    padding: $spacing-md;
+    @include flex(column, flex-start, stretch);
+    gap: $spacing-xs;
+    min-width: 200px;
+}
+
+.submenuLink {
+    background: none;
+    border: none;
+    color: rgba($title-color, 0.7);
+    font-family: $body-font;
+    font-size: $font-size-sm;
+    font-weight: 400;
+    cursor: pointer;
+    padding: $spacing-sm $spacing-md;
+    text-align: left;
+    border-radius: $border-radius-sm;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+        color: $accent-color;
+        background: rgba($accent-color, 0.08);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .navbar {
+        background: rgba($dark, 0.9);
+        border-color: rgba($white, 0.1);
+
+        &::before {
+            background: $dark;
         }
+    }
 
-        .hamburger {
-            @include flex(column, center, center);
-            width: 24px;
-            height: 18px;
-            gap: 4px;
-            position: relative;
+    .menuLink {
+        color: $white;
 
-            span {
-                width: 100%;
-                height: 2px;
-                background: $title-color;
-                border-radius: 1px;
-                transition: all 0.3s ease;
-                transform-origin: center;
-
-                &:nth-child(1) {
-                    transform-origin: 50% 50%;
-                }
-
-                &:nth-child(2) {
-                    transform-origin: 50% 50%;
-                }
-
-                &:nth-child(3) {
-                    transform-origin: 50% 50%;
-                }
-            }
-
-            &.active {
-                span:nth-child(1) {
-                    transform: rotate(45deg) translate(5px, 5px);
-                }
-
-                span:nth-child(2) {
-                    opacity: 0;
-                }
-
-                span:nth-child(3) {
-                    transform: rotate(-45deg) translate(5px, -5px);
-                }
-            }
+        &:hover {
+            background: rgba($white, 0.1);
         }
     }
 
     .submenu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba($white, 0.98);
-        backdrop-filter: blur(25px);
-        border-bottom: 1px solid rgba($title-color, 0.1);
-        box-shadow: 0 4px 20px rgba($title-color, 0.1);
+        background: rgba($dark, 0.9);
+        border-color: rgba($white, 0.1);
 
-        .submenuContent {
-            @include flex(row, center, center);
-            max-width: $container-max-width-xl;
-            margin: 0 auto;
-            padding: $spacing-lg $site-margin-desktop;
-            gap: $spacing-xl;
-
-            @include respond-to(medium-tablet, max) {
-                padding: $spacing-lg $site-margin-mobile;
-            }
-        }
-
-        .submenuItem {
-            background: none;
-            border: none;
-            font-family: $body-font;
-            font-size: $font-size-sm;
-            color: $text-color;
-            cursor: pointer;
-            padding: $spacing-sm $spacing-md;
-            border-radius: $border-radius-sm;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-
-            &:hover {
-                color: $accent-color;
-                background: rgba($accent-color, 0.1);
-            }
+        &::before {
+            background: $dark;
         }
     }
 
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba($title-color, 0.5);
-        z-index: 99;
-        backdrop-filter: blur(5px);
-    }
+    .submenuLink {
+        color: rgba($white, 0.7);
 
-    .mobileMenu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 320px;
-        max-width: 90vw;
-        background: $white;
-        z-index: 101;
-        box-shadow: -4px 0 20px rgba($title-color, 0.1);
-
-        .mobileMenuContent {
-            @include flex(column, flex-start, stretch);
-            padding: $spacing-lg;
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        .mobileNavItem {
-            border-bottom: 1px solid rgba($title-color, 0.1);
-
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-
-        .mobileNavLink {
-            width: 100%;
-            background: none;
-            border: none;
-            font-family: $medium-font;
-            font-size: $font-size-lg;
-            color: $title-color;
-            cursor: pointer;
-            padding: $spacing-lg 0;
-            text-align: left;
-            transition: color 0.2s ease;
-
-            &:hover {
-                color: $accent-color;
-            }
-        }
-
-        .mobileSubmenu {
-            padding-left: $spacing-md;
-            border-left: 2px solid rgba($accent-color, 0.2);
-            margin-left: $spacing-md;
-        }
-
-        .mobileSubmenuItem {
-            width: 100%;
-            background: none;
-            border: none;
-            font-family: $body-font;
-            font-size: $font-size-base;
-            color: $text-color;
-            cursor: pointer;
-            padding: $spacing-md 0;
-            text-align: left;
-            transition: color 0.2s ease;
-
-            &:hover {
-                color: $accent-color;
-            }
+        &:hover {
+            color: $accent-color;
+            background: rgba($accent-color, 0.1);
         }
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .navbar {
-        .navLink::after {
-            transition: none;
-        }
-
-        .hamburger span {
-            transition: none;
-        }
+    .navbarWrapper,
+    .menuLink,
+    .submenuLink {
+        transition: none;
     }
 }
 
-@supports not (backdrop-filter: blur(20px)) {
+@include respond-to(medium-tablet, max) {
     .navbar {
-        background: rgba($white, 0.95);
-
-        &.scrolled {
-            background: $white;
+        .container {
+            justify-content: space-between;
         }
+    }
 
-        .submenu {
-            background: $white;
-        }
+    .menuContainer {
+        display: none;
     }
 }

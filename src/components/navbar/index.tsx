@@ -1,22 +1,29 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SettingsDocumentData } from '../../../prismicio-types';
+import { SettingsDocument } from '../../../prismicio-types';
 import styles from './style.module.scss';
 import Image from 'next/image';
 
 interface NavigationProps {
-    settings: SettingsDocumentData;
+    settings: SettingsDocument;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ settings }) => {
-    const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+const transition = {
+    type: "spring",
+    mass: 0.5,
+    damping: 11.5,
+    stiffness: 100,
+    restDelta: 0.001,
+    restSpeed: 0.001,
+};
 
-    useEffect(() => {
+const Navigation: React.FC<NavigationProps> = ({ settings }) => {
+    const [active, setActive] = useState<string | null>(null);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    React.useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
         };
@@ -25,29 +32,12 @@ const Navigation: React.FC<NavigationProps> = ({ settings }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleMouseEnter = (navTitle: string) => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
-        setActiveSubmenu(navTitle);
-    };
-
-    const handleMouseLeave = () => {
-        timeoutRef.current = setTimeout(() => {
-            setActiveSubmenu(null);
-        }, 150);
-    };
-
-    const handleMobileToggle = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-
     const handleNavigation = (href: string, sectionId?: string) => {
         if (sectionId && window.location.pathname === '/') {
             const element = document.getElementById(sectionId);
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-                setIsMobileMenuOpen(false);
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setActive(null);
                 return;
             }
         }
@@ -58,7 +48,7 @@ const Navigation: React.FC<NavigationProps> = ({ settings }) => {
     };
 
     const getSubmenuForNav = (navTitle: string) => {
-        const submenuSection = settings.submenu_sections?.find(
+        const submenuSection = settings.data.submenu_sections?.find(
             (section) => section.parent_nav === navTitle
         );
 
@@ -69,90 +59,50 @@ const Navigation: React.FC<NavigationProps> = ({ settings }) => {
             .sort((a, b) => (a.order || 0) - (b.order || 0));
     };
 
-    const mainNav = settings.main_navigation || [];
+    const mainNav = settings.data.main_navigation || [];
 
     return (
-        <>
-            <motion.nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`} initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
+        <div className={`${styles.navbarWrapper} ${isScrolled ? styles.scrolled : ''}`}>
+            <motion.nav className={styles.navbar}onMouseLeave={() => setActive(null)}initial={{ y: -100 }}animate={{ y: 0 }}transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
                 <div className={styles.container}>
                     <motion.div className={styles.logo} whileHover={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
-                        {settings.site_logo?.url && (
-                            <Image src={settings.site_logo.url} alt={settings.site_title || 'Logo'} width={200} height={100} priority />
+                        {settings.data.site_logo?.url && (
+                            <Image src={settings.data.site_logo.url} alt={settings.data.site_title || 'Logo'} width={150} height={55} priority />
                         )}
                     </motion.div>
 
-                    <div className={styles.desktopNav}>
-                        <ul className={styles.navList}>
-                            {mainNav.map((item, index) => {
-                                if (!item.title) return null;
+                    <div className={styles.menuContainer}>
+                        {mainNav.map((item, index) => {
+                            if (!item.title) return null;
 
-                                return (
-                                    <li key={`nav-${item.title}-${index}`} className={styles.navItem} onMouseEnter={() => item.has_submenu && handleMouseEnter(item.title || '')} onMouseLeave={() => item.has_submenu && handleMouseLeave()}>
-                                        <motion.button className={styles.navLink} onClick={() => handleNavigation(item.href || '/')} whileHover={{ y: -2 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1, duration: 0.2 }}>
-                                            {item.title}
-                                        </motion.button>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </div>
-
-                    <motion.button className={styles.mobileToggle} onClick={handleMobileToggle} whileTap={{ scale: 0.95 }}>
-                        <span className={`${styles.hamburger} ${isMobileMenuOpen ? styles.active : ''}`}>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </span>
-                    </motion.button>
-                </div>
-
-                <AnimatePresence mode="wait">
-                    {activeSubmenu && (
-                        <motion.div className={styles.submenu} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }} onMouseEnter={() => { if (timeoutRef.current) { clearTimeout(timeoutRef.current); } }} onMouseLeave={handleMouseLeave}>
-                            <div className={styles.submenuContent}>
-                                {getSubmenuForNav(activeSubmenu).map((item, index) => (
-                                    <motion.button key={`submenu-${item.section_id}-${index}`} className={styles.submenuItem} onClick={() => handleNavigation('/', item.section_id || '')} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.05 }} whileHover={{ x: 5 }}>
+                            return (
+                                <div key={`nav-${item.title}-${index}`} className={styles.menuItem} onMouseEnter={() => setActive(item.title)}>
+                                    <motion.button className={styles.menuLink} onClick={() => !item.has_submenu && handleNavigation(item.href || '/')} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1, duration: 0.3 }} whileHover={{ opacity: 0.9 }}>
                                         {item.title}
                                     </motion.button>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+
+                                    <AnimatePresence>
+                                        {active === item.title && item.has_submenu && (
+                                            <motion.div className={styles.submenuWrapper} initial={{ opacity: 0, scale: 0.85, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.85, y: 10 }} transition={transition}>
+                                                <motion.div className={styles.submenu} layoutId="active" transition={transition}>
+                                                    <motion.div className={styles.submenuContent} layout>
+                                                        {getSubmenuForNav(item.title).map((subItem, subIndex) => (
+                                                            <motion.button key={`submenu-${subItem.section_id}-${subIndex}`} className={styles.submenuLink} onClick={() => handleNavigation('/', subItem.section_id || '')} whileHover={{ color: 'var(--accent-color)' }} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: subIndex * 0.05 }}>
+                                                                {subItem.title}
+                                                            </motion.button>
+                                                        ))}
+                                                    </motion.div>
+                                                </motion.div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
             </motion.nav>
-
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <>
-                        <motion.div className={styles.overlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsMobileMenuOpen(false)} />
-                        <motion.div className={styles.mobileMenu} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
-                            <div className={styles.mobileMenuContent}>
-                                {mainNav.map((item, index) => {
-                                    if (!item.title) return null;
-
-                                    return (
-                                        <motion.div key={`mobile-nav-${item.title}-${index}`}className={styles.mobileNavItem}initial={{ opacity: 0, x: 50 }}animate={{ opacity: 1, x: 0 }}transition={{ delay: index * 0.1 }}>
-                                            <button className={styles.mobileNavLink}onClick={() => handleNavigation(item.href || '/')}>
-                                                {item.title}
-                                            </button>
-                                            {item.has_submenu && (
-                                                <div className={styles.mobileSubmenu}>
-                                                    {getSubmenuForNav(item.title).map((subItem) => (
-                                                        <button key={`mobile-submenu-${subItem.section_id}`} className={styles.mobileSubmenuItem} onClick={() => handleNavigation('/', subItem.section_id || '')}>
-                                                            {subItem.title}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </motion.div>
-                                    );
-                                })}
-                            </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </>
+        </div>
     );
 };
 
