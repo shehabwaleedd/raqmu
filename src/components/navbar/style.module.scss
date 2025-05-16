@@ -10,12 +10,6 @@
     z-index: 1000;
     padding: $spacing-xs;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-    &.scrolled {
-        padding: $spacing-md 0;
-        background: rgba($white, 0.8);
-        backdrop-filter: blur(20px);
-    }
 }
 
 .navbar {
@@ -105,18 +99,6 @@
     box-shadow: 
         0 25px 50px -12px rgba($title-color, 0.25),
         0 10px 25px -12px rgba($title-color, 0.15);
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: $white;
-        border-radius: inherit;
-        z-index: -1;
-    }
 }
 
 .submenuContent {
@@ -143,47 +125,11 @@
     white-space: nowrap;
 
     &:hover {
-        color: $accent-color;
-        background: rgba($accent-color, 0.08);
+        color: $title-color !important;
+        background: $brand-gray;
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    .navbar {
-        background: rgba($dark, 0.9);
-        border-color: rgba($white, 0.1);
-
-        &::before {
-            background: $dark;
-        }
-    }
-
-    .menuLink {
-        color: $white;
-
-        &:hover {
-            background: rgba($white, 0.1);
-        }
-    }
-
-    .submenu {
-        background: rgba($dark, 0.9);
-        border-color: rgba($white, 0.1);
-
-        &::before {
-            background: $dark;
-        }
-    }
-
-    .submenuLink {
-        color: rgba($white, 0.7);
-
-        &:hover {
-            color: $accent-color;
-            background: rgba($accent-color, 0.1);
-        }
-    }
-}
 
 @media (prefers-reduced-motion: reduce) {
     .navbarWrapper,

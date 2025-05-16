@@ -99,7 +99,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ slice }) => {
     const currentIndex = emblaApi.selectedScrollSnap();
     setSelectedIndex(currentIndex);
 
-    // Reset autoplay
     const autoplay = emblaApi.plugins().autoplay;
     if (autoplay) {
       autoplay.stop();
@@ -112,10 +111,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ slice }) => {
     isScrolling.current = true;
     emblaApi.scrollTo(index);
 
-    // Reset scrolling state after animation
     setTimeout(() => {
       isScrolling.current = false;
-    }, 30); // Use fixed duration to match carousel options
+    }, 30);
   }, [emblaApi]);
 
   const scrollPrev = useCallback(() => {
