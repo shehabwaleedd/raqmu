@@ -788,6 +788,21 @@ export type SettingsDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *Subsector → Featured Projects*
+ */
+export interface SubsectorPostDocumentDataFeaturedProjectsItem {
+  /**
+   * Project field in *Subsector → Featured Projects*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.featured_projects[].project
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  project: prismic.ContentRelationshipField<"project_post">;
+}
+
+/**
  * Content for Subsector documents
  */
 interface SubsectorPostDocumentData {
@@ -833,7 +848,20 @@ interface SubsectorPostDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  parent_sector: prismic.ContentRelationshipField<"sector_post"> /**
+  parent_sector: prismic.ContentRelationshipField<"sector_post">;
+
+  /**
+   * Featured Projects field in *Subsector*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.featured_projects[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  featured_projects: prismic.GroupField<
+    Simplify<SubsectorPostDocumentDataFeaturedProjectsItem>
+  > /**
    * Meta Title field in *Subsector*
    *
    * - **Field Type**: Text
@@ -1403,6 +1431,7 @@ declare module "@prismicio/client" {
       SettingsDocumentDataFooterLegalLinksItem,
       SubsectorPostDocument,
       SubsectorPostDocumentData,
+      SubsectorPostDocumentDataFeaturedProjectsItem,
       AllDocumentTypes,
       BlockContentSlice,
       BlockContentSliceDefaultPrimaryRightParagraphesItem,

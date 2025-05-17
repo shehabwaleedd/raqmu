@@ -126,12 +126,15 @@ export async function generateStaticParams() {
     }
 
     for (const project of projects) {
-        if (isFilled.contentRelationship(project.data.sector) &&
-            isFilled.contentRelationship(project.data.subsector)) {
+        const sector = project.data.sector;
+        const subsector = project.data.subsector;
+
+        if (sector && typeof sector === 'object' && 'uid' in sector &&
+            subsector && typeof subsector === 'object' && 'uid' in subsector) {
             routes.push({
                 slug: ['sectors',
-                    project.data.sector.uid as string,
-                    project.data.subsector.uid as string,
+                    sector.uid as string,
+                    subsector.uid as string,
                     project.uid]
             });
         }

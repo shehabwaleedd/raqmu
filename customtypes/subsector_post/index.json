@@ -44,6 +44,23 @@
           "select": "document",
           "customtypes": ["sector_post"]
         }
+      },
+      "featured_projects": {
+        "type": "Group",
+        "config": {
+          "label": "Featured Projects",
+          "repeat": true,
+          "fields": {
+            "project": {
+              "type": "Link",
+              "config": {
+                "label": "Project",
+                "select": "document",
+                "customtypes": ["project_post"]
+              }
+            }
+          }
+        }
       }
     },
     "SEO & Metadata": {

@@ -3,8 +3,8 @@
 import { Content, isFilled } from '@prismicio/client';
 import { PrismicRichText } from '@prismicio/react';
 import { PrismicNextImage } from '@prismicio/next';
-import Breadcrumbs, { BreadcrumbItem } from '@/components/breadCrumbs';
-import ProjectsGrid from '@/components/projects/projectsGrid';
+import Breadcrumbs from '@/components/breadCrumbs';
+import ProjectsClient from '@/components/projects/ProjectsClient';
 import styles from './style.module.scss';
 
 interface SubSectorDetailProps {
@@ -21,7 +21,8 @@ export default function SubSectorDetail({ sector, subsector, projects }: SubSect
             .filter(Boolean)
     )];
 
-    const breadcrumbItems: BreadcrumbItem[] = [
+    // Create breadcrumb items
+    const breadcrumbItems = [
         { label: 'Home', href: '/' },
         { label: 'Sectors', href: '/sectors' },
         { label: sector.data.name || '', href: `/sectors/${sector.uid}` },
@@ -35,14 +36,22 @@ export default function SubSectorDetail({ sector, subsector, projects }: SubSect
 
                 <header className={styles.header}>
                     <div className={styles.headerImage}>
-                        {isFilled.image(subsector.data.main_image) && (
+                        {isFilled.image(subsector.data.main_image) ? (
                             <PrismicNextImage
                                 field={subsector.data.main_image}
                                 sizes="100vw"
                                 priority
                                 fill
                             />
-                        )}
+                        ) : isFilled.image(sector.data.main_image) ? (
+                            // Fallback to sector image if subsector image doesn't exist
+                            <PrismicNextImage
+                                field={sector.data.main_image}
+                                sizes="100vw"
+                                priority
+                                fill
+                            />
+                        ) : null}
                         <div className={styles.headerOverlay} />
                     </div>
 
@@ -59,12 +68,15 @@ export default function SubSectorDetail({ sector, subsector, projects }: SubSect
                 </header>
 
                 <section className={styles.projectsSection}>
-                    <h2 className={styles.projectsTitle}>Our {subsector.data.name} Projects</h2>
+                    <h2 className={styles.projectsTitle}>
+                        {sector.data.name} - {subsector.data.name} Projects
+                    </h2>
 
-                    <ProjectsGrid
+                    <ProjectsClient
                         projects={projects}
+                        sectors={[]}
+                        subSectors={[]}
                         locations={locations}
-                        baseUrl={`/sectors/${sector.uid}/${subsector.uid}`}
                     />
                 </section>
             </div>

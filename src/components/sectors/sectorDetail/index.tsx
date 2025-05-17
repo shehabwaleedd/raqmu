@@ -5,7 +5,7 @@ import { Content, isFilled } from '@prismicio/client';
 import { PrismicRichText } from '@prismicio/react';
 import { PrismicNextImage } from '@prismicio/next';
 import TransitionLink from '@/animation/transitionLink';
-import Breadcrumbs, { BreadcrumbItem } from '@/components/breadCrumbs';
+import Breadcrumbs from '@/components/breadCrumbs';
 import styles from './style.module.scss';
 
 interface SectorDetailProps {
@@ -27,8 +27,8 @@ export default function SectorDetail({ sector, subsectors }: SectorDetailProps) 
             }
         }
     };
-
-    const breadcrumbItems: BreadcrumbItem[] = [
+    
+    const breadcrumbItems = [
         { label: 'Home', href: '/' },
         { label: 'Sectors', href: '/sectors' },
         { label: sector.data.name || '', href: `/sectors/${sector.uid}`, current: true }
@@ -81,19 +81,20 @@ export default function SectorDetail({ sector, subsectors }: SectorDetailProps) 
                                         {isFilled.image(subsector.data.main_image) && (
                                             <PrismicNextImage
                                                 field={subsector.data.main_image}
-                                                sizes="(max-width: 768px) 100vw, 33vw"
+                                                sizes="100vw"
+                                                fill
                                             />
                                         )}
                                         <div className={styles.subsectorOverlay} />
-                                    </div>
-                                    <div className={styles.subsectorContent}>
-                                        <h3 className={styles.subsectorName}>{subsector.data.name}</h3>
-                                        <span className={styles.viewProjects}>
-                                            View Projects
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                        </span>
+                                        <div className={styles.subsectorContent}>
+                                            <h3 className={styles.subsectorName}>{subsector.data.name}</h3>
+                                            <span className={styles.viewProjects}>
+                                                View Projects
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                            </span>
+                                        </div>
                                     </div>
                                 </TransitionLink>
                             </motion.div>

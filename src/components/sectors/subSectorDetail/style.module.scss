@@ -20,7 +20,7 @@
 .header {
     position: relative;
     height: 400px;
-    margin-bottom: $spacing-4xl;
+    margin: $spacing-xl 0 $spacing-4xl;
     border-radius: $border-radius-lg;
     overflow: hidden;
 
@@ -116,7 +116,7 @@
     display: inline-block;
     font-family: $medium-font;
     font-size: $small-font-size;
-    background-color: rgba($white, 0.2);
+    background-color: rgba($accent-color, 0.9);
     padding: $spacing-xs $spacing-md;
     border-radius: $border-radius-sm;
     margin-top: $spacing-md;

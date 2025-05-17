@@ -20,7 +20,7 @@
 .header {
     position: relative;
     height: 500px;
-    margin-bottom: $spacing-4xl;
+    margin: $spacing-xl 0 $spacing-4xl;
     border-radius: $border-radius-lg;
     overflow: hidden;
 
@@ -136,42 +136,43 @@
 }
 
 .subsectorsList {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: $spacing-xl;
-
-    @include respond-to(large-tablet) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include respond-to(medium-tablet) {
-        grid-template-columns: 1fr;
-        gap: $spacing-lg;
-    }
 }
 
 .subsectorCard {
+    width: 100%;
     border-radius: $border-radius-sm;
     overflow: hidden;
     transition: $transition-normal;
     box-shadow: $box-shadow-sm;
+    height: 300px;
 
     &:hover {
         transform: translateY(-8px);
         box-shadow: $box-shadow-lg;
 
         .subsectorOverlay {
-            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.6);
         }
 
         .viewProjects {
-            background-color: $accent-color;
-            color: $white;
+            opacity: 1;
+            transform: translateY(0);
 
             svg {
-                transform: translateX(4px);
+                transform: translateX(5px);
             }
         }
+    }
+
+    @include respond-to(medium-tablet) {
+        height: 250px;
+    }
+
+    @include respond-to(phone) {
+        height: 200px;
     }
 }
 
@@ -179,11 +180,13 @@
     display: block;
     text-decoration: none;
     color: inherit;
+    height: 100%;
 }
 
 .subsectorImage {
     position: relative;
-    height: 200px;
+    width: 100%;
+    height: 100%;
 
     img {
         width: 100%;
@@ -198,25 +201,40 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     transition: $transition-normal;
 }
 
 .subsectorContent {
-    padding: $spacing-md;
-    background-color: $white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: $white;
+    width: 90%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    gap: $spacing-md;
 }
 
 .subsectorName {
     font-family: $title-font;
-    font-size: $body-font-size;
-    font-weight: $semi-bold-font-weight;
-    color: $title-color;
+    font-size: $bigger-font-size;
+    font-weight: $bold-font-weight;
+    color: $white;
     margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    transition: $transition-normal;
+
+    @include respond-to(medium-tablet) {
+        font-size: $big-font-size;
+    }
+
+    @include respond-to(phone) {
+        font-size: $medium-font-size;
+    }
 }
 
 .viewProjects {
@@ -224,14 +242,21 @@
     align-items: center;
     gap: $spacing-xs;
     font-family: $medium-font;
-    font-size: $small-font-size;
-    color: $accent-color;
-    background-color: rgba($accent-color, 0.1);
-    padding: $spacing-xs $spacing-sm;
+    font-size: $normal-font-size;
+    color: $white;
+    background-color: rgba($accent-color, 0.9);
+    padding: $spacing-sm $spacing-lg;
     border-radius: $border-radius-sm;
     transition: $transition-normal;
+    opacity: 0.8;
+    transform: translateY(10px);
 
     svg {
         transition: $transition-normal;
+    }
+
+    @include respond-to(phone) {
+        font-size: $small-font-size;
+        padding: $spacing-xs $spacing-md;
     }
 }
