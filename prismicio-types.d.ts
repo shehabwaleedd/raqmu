@@ -69,7 +69,11 @@ export type HomePageDocument<Lang extends string = string> =
     Lang
   >;
 
-type PageDocumentDataSlicesSlice = HeroSectionSlice;
+type PageDocumentDataSlicesSlice =
+  | TwoColumnGridSlice
+  | BlockContentSlice
+  | ServiceHeroSlice
+  | HeroSectionSlice;
 
 /**
  * Content for Page documents
@@ -735,6 +739,99 @@ export type AllDocumentTypes =
   | SettingsDocument;
 
 /**
+ * Item in *BlockContent → Default → Primary → Right Paragraphes*
+ */
+export interface BlockContentSliceDefaultPrimaryRightParagraphesItem {
+  /**
+   * Paragraph field in *BlockContent → Default → Primary → Right Paragraphes*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Paragraph
+   * - **API ID Path**: block_content.default.primary.right_paragraphes[].paragraph
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  paragraph: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *BlockContent → Default → Primary*
+ */
+export interface BlockContentSliceDefaultPrimary {
+  /**
+   * Left Paragraph field in *BlockContent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Left Paragraph ( Optional )
+   * - **API ID Path**: block_content.default.primary.left_paragraph
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  left_paragraph: prismic.KeyTextField;
+
+  /**
+   * CTA field in *BlockContent → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Please Enter CTA ( Optional )
+   * - **API ID Path**: block_content.default.primary.cta
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Show CTA field in *BlockContent → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: block_content.default.primary.show_cta
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  show_cta: prismic.BooleanField;
+
+  /**
+   * Right Paragraphes field in *BlockContent → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: block_content.default.primary.right_paragraphes[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  right_paragraphes: prismic.GroupField<
+    Simplify<BlockContentSliceDefaultPrimaryRightParagraphesItem>
+  >;
+}
+
+/**
+ * Default variation for BlockContent Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type BlockContentSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BlockContentSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *BlockContent*
+ */
+type BlockContentSliceVariation = BlockContentSliceDefault;
+
+/**
+ * BlockContent Shared Slice
+ *
+ * - **API ID**: `block_content`
+ * - **Description**: BlockContent
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type BlockContentSlice = prismic.SharedSlice<
+  "block_content",
+  BlockContentSliceVariation
+>;
+
+/**
  * Item in *HeroSection → Default → Primary → Hero Slides*
  */
 export interface HeroSectionSliceDefaultPrimarySlidesItem {
@@ -894,6 +991,221 @@ export type HeroSectionSlice = prismic.SharedSlice<
   HeroSectionSliceVariation
 >;
 
+/**
+ * Primary content in *BlockHero → Default → Primary*
+ */
+export interface ServiceHeroSliceDefaultPrimary {
+  /**
+   * Service Title field in *BlockHero → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Service Title ( Must )
+   * - **API ID Path**: service_hero.default.primary.service_title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  service_title: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for BlockHero Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ServiceHeroSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ServiceHeroSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *BlockHero*
+ */
+type ServiceHeroSliceVariation = ServiceHeroSliceDefault;
+
+/**
+ * BlockHero Shared Slice
+ *
+ * - **API ID**: `service_hero`
+ * - **Description**: ServiceHero
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ServiceHeroSlice = prismic.SharedSlice<
+  "service_hero",
+  ServiceHeroSliceVariation
+>;
+
+/**
+ * Item in *TwoColumnGrid → Default → Primary → Descriptions*
+ */
+export interface TwoColumnGridSliceDefaultPrimaryDescriptionsItem {
+  /**
+   * Description field in *TwoColumnGrid → Default → Primary → Descriptions*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter description text
+   * - **API ID Path**: two_column_grid.default.primary.descriptions[].description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Item in *TwoColumnGrid → Default → Primary → Under Title Descriptions*
+ */
+export interface TwoColumnGridSliceDefaultPrimaryUnderTitleDescriptionsItem {
+  /**
+   * Under Title Description field in *TwoColumnGrid → Default → Primary → Under Title Descriptions*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter description text
+   * - **API ID Path**: two_column_grid.default.primary.underTitleDescriptions[].description
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *TwoColumnGrid → Default → Primary*
+ */
+export interface TwoColumnGridSliceDefaultPrimary {
+  /**
+   * sectionId field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Id
+   * - **API ID Path**: two_column_grid.default.primary.sectionid
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  sectionid: prismic.KeyTextField;
+
+  /**
+   * Title field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter section title
+   * - **API ID Path**: two_column_grid.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * eyebrow field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Please Enter Eyebrow ( Must )
+   * - **API ID Path**: two_column_grid.default.primary.eyebrow
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  eyebrow: prismic.KeyTextField;
+
+  /**
+   * Subtitle field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Enter section subtitle
+   * - **API ID Path**: two_column_grid.default.primary.subtitle
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  subtitle: prismic.KeyTextField;
+
+  /**
+   * Descriptions field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: two_column_grid.default.primary.descriptions[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  descriptions: prismic.GroupField<
+    Simplify<TwoColumnGridSliceDefaultPrimaryDescriptionsItem>
+  >;
+
+  /**
+   * Under Title Descriptions field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: two_column_grid.default.primary.underTitleDescriptions[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  underTitleDescriptions: prismic.GroupField<
+    Simplify<TwoColumnGridSliceDefaultPrimaryUnderTitleDescriptionsItem>
+  >;
+
+  /**
+   * leftImage field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: two_column_grid.default.primary.leftimage
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  leftimage: prismic.ImageField<never>;
+
+  /**
+   * rightImage field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: two_column_grid.default.primary.rightimage
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  rightimage: prismic.ImageField<never>;
+
+  /**
+   * reverse field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: two_column_grid.default.primary.reverse
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  reverse: prismic.BooleanField;
+
+  /**
+   * CTA field in *TwoColumnGrid → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Please Enter CTA ( Optional )
+   * - **API ID Path**: two_column_grid.default.primary.cta
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  cta: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for TwoColumnGrid Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type TwoColumnGridSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<TwoColumnGridSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *TwoColumnGrid*
+ */
+type TwoColumnGridSliceVariation = TwoColumnGridSliceDefault;
+
+/**
+ * TwoColumnGrid Shared Slice
+ *
+ * - **API ID**: `two_column_grid`
+ * - **Description**: A two-column layout with animated title, subtitle, and descriptions
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type TwoColumnGridSlice = prismic.SharedSlice<
+  "two_column_grid",
+  TwoColumnGridSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -935,11 +1247,26 @@ declare module "@prismicio/client" {
       SettingsDocumentDataContactInformationItem,
       SettingsDocumentDataFooterLegalLinksItem,
       AllDocumentTypes,
+      BlockContentSlice,
+      BlockContentSliceDefaultPrimaryRightParagraphesItem,
+      BlockContentSliceDefaultPrimary,
+      BlockContentSliceVariation,
+      BlockContentSliceDefault,
       HeroSectionSlice,
       HeroSectionSliceDefaultPrimarySlidesItem,
       HeroSectionSliceDefaultPrimary,
       HeroSectionSliceVariation,
       HeroSectionSliceDefault,
+      ServiceHeroSlice,
+      ServiceHeroSliceDefaultPrimary,
+      ServiceHeroSliceVariation,
+      ServiceHeroSliceDefault,
+      TwoColumnGridSlice,
+      TwoColumnGridSliceDefaultPrimaryDescriptionsItem,
+      TwoColumnGridSliceDefaultPrimaryUnderTitleDescriptionsItem,
+      TwoColumnGridSliceDefaultPrimary,
+      TwoColumnGridSliceVariation,
+      TwoColumnGridSliceDefault,
     };
   }
 }

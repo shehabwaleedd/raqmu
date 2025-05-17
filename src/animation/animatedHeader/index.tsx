@@ -1,120 +1,64 @@
-"use client";
+'use client'
 
-import React, { useRef, ReactNode } from "react";
-import gsap from "gsap";
-import { SplitText } from "gsap/SplitText";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import styles from './style.module.scss';
+import { useInView, motion } from 'framer-motion';
+import React, { useRef, ElementType, useMemo } from 'react';
+import { translate } from '../animate';
 
-gsap.registerPlugin(SplitText, ScrollTrigger);
-
-export interface AnimatedHeaderProps {
-    children: ReactNode;
-    animateOnScroll?: boolean;
+interface AnimatedHeadersProps<T extends ElementType = 'h2'> {
+    phrase: string;
+    once?: boolean;
+    as?: T;
+    className?: string;
+    direction?: "left" | "center";
     delay?: number;
+    wordDelay?: number;
 }
 
-const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({ children, animateOnScroll = true, delay = 0 }) => {
-    const wrapperRef = useRef<HTMLDivElement>(null);
+const AnimatedHeaders = <T extends ElementType = 'h2'>({
+    phrase,
+    once = true,
+    as,
+    className = '',
+    direction = "left",
+    delay = 0,
+    wordDelay = 0.05,
+    ...rest
+}: AnimatedHeadersProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof AnimatedHeadersProps<T>>) => {
+    const titleRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(titleRef, {
+        margin: "0px 0px -100px 0px",
+        once
+    });
 
-    useGSAP(
-        () => {
-            if (!wrapperRef.current) return;
+    const Component = as || 'h2';
+    const isCenter = direction === "center";
 
-            const elementRefs: HTMLElement[] = [];
-            const splitRefs: SplitText[] = [];
-            let lines: HTMLElement[] = [];
+    const words = useMemo(() => {
+        if (!phrase) return [];
+        return phrase.split(" ").filter(word => word.trim().length > 0);
+    }, [phrase]);
 
-            let elements: HTMLElement[] = [];
-            if (wrapperRef.current.hasAttribute("data-copy-wrapper")) {
-                elements = Array.from(
-                    wrapperRef.current.children
-                ).filter((el): el is HTMLElement => el instanceof HTMLElement);
-            } else {
-                elements = [wrapperRef.current];
-            }
-
-            elements.forEach((element) => {
-                elementRefs.push(element);
-
-                const split = new SplitText(element, {
-                    type: "lines",
-                    linesClass: "line++",
-                    lineThreshold: 0.1,
-                });
-
-                splitRefs.push(split);
-
-                const computedStyle = window.getComputedStyle(element);
-                const textIndent = computedStyle.textIndent;
-
-                if (textIndent && textIndent !== "0px") {
-                    if (split.lines.length > 0) {
-                        const firstLine = split.lines[0];
-                        if (firstLine instanceof HTMLElement) {
-                            firstLine.style.paddingLeft = textIndent;
-                        }
-                    }
-                    element.style.textIndent = "0";
-                }
-
-                const lineElements = split.lines.filter(
-                    (line): line is HTMLElement => line instanceof HTMLElement
-                );
-                lines = [...lines, ...lineElements];
-            });
-
-            gsap.set(lines, { y: "200%" });
-
-            const animationProps = {
-                y: "0%",
-                duration: 1,
-                stagger: 0.1,
-                ease: "power4.out",
-                delay,
-            };
-
-            if (animateOnScroll) {
-                gsap.to(lines, {
-                    ...animationProps,
-                    scrollTrigger: {
-                        trigger: wrapperRef.current,
-                        start: "top 75%",
-                        once: true,
-                    },
-                });
-            } else {
-                gsap.to(lines, animationProps);
-            }
-
-            return () => {
-                splitRefs.forEach((split) => {
-                    if (split) {
-                        split.revert();
-                    }
-                });
-            };
-        },
-        { scope: wrapperRef, dependencies: [animateOnScroll, delay] }
-    );
-
-    const isSingleChild = React.Children.count(children) === 1;
-    const singleChild = isSingleChild ? React.Children.only(children) : null;
-    const isValidSingleElement = isSingleChild && React.isValidElement(singleChild);
-
-    if (isValidSingleElement) {
-        return (
-            <div ref={wrapperRef} style={{ display: "contents" }}>
-                {singleChild}
-            </div>
-        );
+    if (!phrase?.trim()) {
+        return null;
     }
 
     return (
-        <div ref={wrapperRef} data-copy-wrapper="true">
-            {children}
+        <div ref={titleRef} className={`${styles.title} ${isCenter ? styles.center : ''} ${className}`.trim()}>
+            <div className={styles.content}>
+                <Component {...rest}>
+                    {words.map((word, index) => (
+                        <div key={`${word}-${index}`} className={styles.mask}>
+                            <motion.span variants={translate} custom={index} animate={isInView ? "enter" : "exit"} transition={{ delay: delay + (index * wordDelay), duration: 0.5, ease: [0.76, 0, 0.24, 1] }}>
+                                {word}
+                            </motion.span>
+                            {index < words.length - 1 && <span className={styles.space}> </span>}
+                        </div>
+                    ))}
+                </Component>
+            </div>
         </div>
     );
 };
 
-export default AnimatedHeader;
+export default AnimatedHeaders;

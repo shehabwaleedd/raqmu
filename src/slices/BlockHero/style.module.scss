@@ -1,0 +1,33 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+
+.serviceHero {
+    @include flexCenter(column);
+    width: 100%;
+    padding: $section-common-full-padding;
+    max-width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
+    @include respond-to(medium-tablet, max) {
+        padding: $section-space-small 0;
+    }
+
+    .titleContent {
+        overflow: hidden;
+        line-height: 1;
+    }
+    
+    h1 {
+        font-size: $size-7;
+        text-align: center;
+        line-height: 1.2;
+        
+        @include respond-to(laptop, max) {
+            font-size: $size-5;
+        }
+        @include respond-to(ipad, max) {
+            font-size: $size-3;
+        }
+    }
+}

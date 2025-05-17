@@ -1,0 +1,59 @@
+@import "@/styles/variables";
+
+.centerImage {
+    height: auto;
+    width: 100%;
+    clip-path: inset(0 0 100% 0);
+    position: relative;
+
+    @media (max-width: 666px) {
+        height: 50vh;
+    }
+
+    .placeholder {
+        position: absolute;
+        inset: 0;
+        background: #f0f0f0;
+        animation: pulse 2s infinite;
+        border-radius: 2px;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        @media (max-width: 666px) {
+            height: 50vh;
+        }
+    }
+
+    .image {
+        height: auto;
+        max-height: 55vh;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 2px;
+
+        @media (max-width: 666px) {
+            height: 50vh;
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #f0f0f0;
+    }
+
+    50% {
+        background-color: #e0e0e0;
+    }
+
+    100% {
+        background-color: #f0f0f0;
+    }
+}

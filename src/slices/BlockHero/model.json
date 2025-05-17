@@ -1,0 +1,26 @@
+{
+  "id": "service_hero",
+  "type": "SharedSlice",
+  "name": "BlockHero",
+  "description": "ServiceHero",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "service_title": {
+          "type": "Text",
+          "config": {
+            "label": "Service Title",
+            "placeholder": "Please Enter Service Title ( Must )"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

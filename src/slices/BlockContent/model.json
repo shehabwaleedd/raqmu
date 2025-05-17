@@ -1,0 +1,62 @@
+{
+  "id": "block_content",
+  "type": "SharedSlice",
+  "name": "BlockContent",
+  "description": "BlockContent",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "left_paragraph": {
+          "type": "Text",
+          "config": {
+            "label": "Left Paragraph",
+            "placeholder": "Please Enter Left Paragraph ( Optional )"
+          }
+        },
+        "cta": {
+          "type": "Link",
+          "config": {
+            "label": "CTA",
+            "placeholder": "Please Enter CTA ( Optional )",
+            "select": null,
+            "allowTargetBlank": true,
+            "allowText": true,
+            "repeat": false
+          }
+        },
+        "show_cta": {
+          "type": "Boolean",
+          "config": {
+            "label": "Show CTA",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
+        },
+        "right_paragraphes": {
+          "type": "Group",
+          "config": {
+            "label": "Right Paragraphes",
+            "repeat": true,
+            "fields": {
+              "paragraph": {
+                "type": "Text",
+                "config": {
+                  "label": "Paragraph",
+                  "placeholder": "Please Enter Paragraph "
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

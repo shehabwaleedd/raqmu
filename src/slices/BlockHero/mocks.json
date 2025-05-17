@@ -1,0 +1,14 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"service_title": {
+				"__TYPE__": "FieldContent",
+				"value": "underline",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]

@@ -17,6 +17,15 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "two_column_grid": {
+              "type": "SharedSlice"
+            },
+            "block_content": {
+              "type": "SharedSlice"
+            },
+            "service_hero": {
+              "type": "SharedSlice"
+            },
             "hero_section": {
               "type": "SharedSlice"
             }

@@ -1,0 +1,114 @@
+{
+  "id": "two_column_grid",
+  "type": "SharedSlice",
+  "name": "TwoColumnGrid",
+  "description": "A two-column layout with animated title, subtitle, and descriptions",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "sectionid": {
+          "type": "Text",
+          "config": {
+            "label": "sectionId",
+            "placeholder": "Please Enter Id"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Enter section title"
+          }
+        },
+        "eyebrow": {
+          "type": "Text",
+          "config": {
+            "label": "eyebrow",
+            "placeholder": "Please Enter Eyebrow ( Must )"
+          }
+        },
+        "subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Enter section subtitle"
+          }
+        },
+        "descriptions": {
+          "type": "Group",
+          "config": {
+            "label": "Descriptions",
+            "repeat": true,
+            "fields": {
+              "description": {
+                "type": "Text",
+                "config": {
+                  "label": "Description",
+                  "placeholder": "Enter description text"
+                }
+              }
+            }
+          }
+        },
+        "underTitleDescriptions": {
+          "type": "Group",
+          "config": {
+            "label": "Under Title Descriptions",
+            "repeat": true,
+            "fields": {
+              "description": {
+                "type": "Text",
+                "config": {
+                  "label": "Under Title Description",
+                  "placeholder": "Enter description text"
+                }
+              }
+            }
+          }
+        },
+        "leftimage": {
+          "type": "Image",
+          "config": {
+            "label": "leftImage",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "rightimage": {
+          "type": "Image",
+          "config": {
+            "label": "rightImage",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "reverse": {
+          "type": "Boolean",
+          "config": {
+            "label": "reverse",
+            "placeholder_false": "false",
+            "placeholder_true": "true",
+            "default_value": false
+          }
+        },
+        "cta": {
+          "type": "Link",
+          "config": {
+            "label": "CTA",
+            "placeholder": "Please Enter CTA ( Optional )",
+            "allowTargetBlank": true,
+            "select": null,
+            "allowText": true
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
