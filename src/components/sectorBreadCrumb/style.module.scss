@@ -1,9 +1,10 @@
 @import '@/styles/variables';
 
 .breadcrumbs {
-    margin-bottom: $spacing-xl;
+    margin-bottom: $spacing-lg;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: $spacing-xs;
 }
 
@@ -13,6 +14,7 @@
     color: $text-gray;
     text-decoration: none;
     transition: $transition-fast;
+    white-space: nowrap;
 
     &:hover {
         color: $accent-color;
@@ -28,4 +30,5 @@
     font-family: $medium-font;
     font-size: $small-font-size;
     color: $title-color;
+    white-space: nowrap;
 }

@@ -1,0 +1,119 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.sectorsList {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xl;
+}
+
+.sectorCard {
+    background-color: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    box-shadow: $box-shadow-sm;
+    transition: $transition-normal;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background-color: $accent-color;
+        border-radius: 2px;
+    }
+
+    &:hover {
+        box-shadow: $box-shadow-md;
+    }
+}
+
+.sectorMain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xl;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $border-color;
+
+    @include respond-to(medium-tablet) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $spacing-sm;
+    }
+}
+
+.sectorName {
+    font-family: $title-font;
+    font-size: $bigger-font-size;
+    font-weight: $bold-font-weight;
+    color: $title-color;
+    margin: 0;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: $transition-fast;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+
+    @include respond-to(medium-tablet) {
+        font-size: $big-font-size;
+    }
+}
+
+.projectCount {
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    color: $text-gray;
+    background-color: $brand-gray;
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius-sm;
+}
+
+.subSectorsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: $spacing-md;
+
+    @include respond-to(phone) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.subSector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-sm $spacing-lg;
+    background-color: $brand-gray;
+    border-radius: $border-radius-sm;
+    color: $title-color;
+    text-decoration: none;
+    font-family: $body-font;
+    font-size: $normal-font-size;
+    transition: $transition-normal;
+
+    svg {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: $transition-normal;
+    }
+
+    &:hover {
+        background-color: rgba($accent-color, 0.1);
+        color: $accent-color;
+
+        svg {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+}

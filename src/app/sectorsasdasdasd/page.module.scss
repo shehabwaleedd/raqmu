@@ -1,0 +1,68 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.sectorsPage {
+    background-color: $white;
+    min-height: 100vh;
+    padding-top: $spacing-4xl;
+}
+
+.container {
+    max-width: $container-max-width-xxl;
+    margin: 0 auto;
+    padding: 0 $site-margin-desktop;
+
+    @include respond-to(medium-tablet) {
+        padding: 0 $site-margin-mobile;
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: $spacing-5xl;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -$spacing-xl;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 2px;
+        background-color: $accent-color;
+    }
+}
+
+.eyebrow {
+    display: inline-block;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: $accent-color;
+    margin-bottom: $spacing-md;
+}
+
+.title {
+    font-family: $title-font;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: $bold-font-weight;
+    color: $title-color;
+    margin-bottom: $spacing-lg;
+    line-height: 1.1;
+
+    background: linear-gradient(135deg, $title-color 0%, $accent-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-family: $body-font;
+    font-size: $body-font-size;
+    color: $text-color;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}

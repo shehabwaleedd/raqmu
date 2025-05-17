@@ -1,0 +1,153 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.subsectorPage {
+    background-color: $white;
+    min-height: 100vh;
+    padding-bottom: $spacing-5xl;
+}
+
+.container {
+    max-width: $container-max-width-xxl;
+    margin: 0 auto;
+    padding: 0 $site-margin-desktop;
+
+    @include respond-to(medium-tablet) {
+        padding: 0 $site-margin-mobile;
+    }
+}
+
+.header {
+    position: relative;
+    height: 400px;
+    margin-bottom: $spacing-4xl;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+
+    @include respond-to(medium-tablet) {
+        height: 300px;
+    }
+
+    @include respond-to(phone) {
+        height: 250px;
+    }
+}
+
+.headerImage {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    img {
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+.headerOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.headerContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: $spacing-3xl;
+    color: $white;
+
+    @include respond-to(medium-tablet) {
+        padding: $spacing-xl;
+    }
+}
+
+.sectorName {
+    display: inline-block;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: $spacing-sm;
+    opacity: 0.8;
+}
+
+.title {
+    font-family: $title-font;
+    font-size: $bigger-font-size;
+    font-weight: $bold-font-weight;
+    margin-bottom: $spacing-md;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+    @include respond-to(medium-tablet) {
+        font-size: $big-font-size;
+    }
+
+    @include respond-to(phone) {
+        font-size: $medium-font-size;
+    }
+}
+
+.description {
+    font-family: $body-font;
+    font-size: $body-font-size;
+    max-width: 700px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: $spacing-md;
+
+    p {
+        margin: 0 0 $spacing-sm 0;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    @include respond-to(medium-tablet) {
+        font-size: $normal-font-size;
+    }
+}
+
+.projectCount {
+    display: inline-block;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    background-color: rgba($white, 0.2);
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius-sm;
+    margin-top: $spacing-md;
+}
+
+.projectsSection {
+    margin-top: $spacing-3xl;
+}
+
+.projectsTitle {
+    font-family: $title-font;
+    font-size: $big-font-size;
+    font-weight: $bold-font-weight;
+    color: $title-color;
+    margin-bottom: $spacing-xl;
+    position: relative;
+    padding-left: $spacing-lg;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 70%;
+        background-color: $accent-color;
+        border-radius: 2px;
+    }
+
+    @include respond-to(medium-tablet) {
+        font-size: $medium-font-size;
+    }
+}

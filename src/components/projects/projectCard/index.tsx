@@ -5,12 +5,13 @@ import styles from './style.module.scss';
 
 interface ProjectCardProps {
     project: Content.ProjectPostDocument;
+    url: string;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, url }: ProjectCardProps) {
     return (
         <article className={styles.card}>
-            <TransitionLink href={`/projects/${project.uid}`} className={styles.link}>
+            <TransitionLink href={url} className={styles.link}>
                 <div className={styles.imageWrapper}>
                     <PrismicNextImage
                         field={project.data.project_main_image}
@@ -20,7 +21,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 <div className={styles.content}>
                     <h2 className={styles.title}>{project.data.client_name}</h2>
                     <div className={styles.meta}>
-                        <span className={styles.sector}>{project.data.sector}</span>
+                        <span className={styles.location}>{project.data.location}</span>
                         <span className={styles.year}>{project.data.year}</span>
                     </div>
                 </div>

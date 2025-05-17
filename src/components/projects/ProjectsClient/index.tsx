@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Content } from '@prismicio/client';
+import { Content, isFilled } from '@prismicio/client';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectCard from '@/components/projects/projectCard';
 import styles from './style.module.scss';
@@ -50,9 +50,18 @@ export default function ProjectsClient({
 
     const filteredProjects = useMemo(() => {
         const filtered = projects.filter(project => {
-            const projectSector = project.data.sector as string;
-            const projectSubSector = project.data.sub_sector as string;
-            const projectLocation = project.data.location as string;
+            // Safely extract values from content relationship fields
+            let projectSector = '';
+            if (isFilled.contentRelationship(project.data.sector)) {
+                projectSector = project.data.sector.uid || '';
+            }
+
+            let projectSubSector = '';
+            if (isFilled.contentRelationship(project.data.subsector)) {
+                projectSubSector = project.data.subsector.uid || '';
+            }
+
+            const projectLocation = project.data.location || '';
 
             const matchesSector = activeFilters.sectors.length === 0 || activeFilters.sectors.includes(projectSector);
             const matchesSubSector = activeFilters.subSectors.length === 0 || activeFilters.subSectors.includes(projectSubSector);
@@ -62,9 +71,11 @@ export default function ProjectsClient({
         });
 
         if (sortBy === 'alphabetical') {
-            filtered.sort((a, b) =>
-                (a.data.client_name as string).localeCompare(b.data.client_name as string)
-            );
+            filtered.sort((a, b) => {
+                const aName = a.data.client_name || '';
+                const bName = b.data.client_name || '';
+                return aName.toString().localeCompare(bName.toString());
+            });
         } else {
             filtered.sort((a, b) =>
                 new Date(b.first_publication_date).getTime() - new Date(a.first_publication_date).getTime()
@@ -321,9 +332,27 @@ export default function ProjectsClient({
                 transition={{ duration: 0.3 }}
             >
                 {filteredProjects.length > 0 ? (
-                    filteredProjects.map((project) => (
-                        <ProjectCard key={project.uid} project={project} />
-                    ))
+                    filteredProjects.map((project) => {
+                        // Safely extract UIDs for the project card URL
+                        let sectorUid = '';
+                        let subsectorUid = '';
+
+                        if (isFilled.contentRelationship(project.data.sector)) {
+                            sectorUid = project.data.sector.uid || '';
+                        }
+
+                        if (isFilled.contentRelationship(project.data.subsector)) {
+                            subsectorUid = project.data.subsector.uid || '';
+                        }
+
+                        return (
+                            <ProjectCard
+                                key={project.uid}
+                                project={project}
+                                url={`/sectors/${sectorUid}/${subsectorUid}/${project.uid}`}
+                            />
+                        );
+                    })
                 ) : (
                     <div className={styles.emptyState}>
                         <div className={styles.emptyIcon}>🔍</div>

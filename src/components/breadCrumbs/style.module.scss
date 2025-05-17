@@ -1,0 +1,38 @@
+@import '@/styles/variables';
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-xl;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+}
+
+.breadcrumbItem {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+}
+
+.link {
+    color: $text-gray;
+    text-decoration: none;
+    transition: $transition-fast;
+    white-space: nowrap;
+
+    &:hover {
+        color: $accent-color;
+    }
+}
+
+.separator {
+    color: $text-gray;
+}
+
+.current {
+    color: $title-color;
+    white-space: nowrap;
+    font-weight: $semi-bold-font-weight;
+}

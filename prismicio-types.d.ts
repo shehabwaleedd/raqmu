@@ -135,11 +135,11 @@ export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
 /**
- * Item in *Project Post → Project's Gallery*
+ * Item in *Project → Project's Gallery*
  */
 export interface ProjectPostDocumentDataGalleryImagesItem {
   /**
-   * Gallery Image field in *Project Post → Project's Gallery*
+   * Gallery Image field in *Project → Project's Gallery*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -149,14 +149,12 @@ export interface ProjectPostDocumentDataGalleryImagesItem {
   image: prismic.ImageField<never>;
 }
 
-type ProjectPostDocumentDataSlicesSlice = never;
-
 /**
- * Content for Project Post documents
+ * Content for Project documents
  */
 interface ProjectPostDocumentData {
   /**
-   * Client Name field in *Project Post*
+   * Client Name field in *Project*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Please Enter Client's Name (Must)
@@ -167,7 +165,7 @@ interface ProjectPostDocumentData {
   client_name: prismic.KeyTextField;
 
   /**
-   * Description field in *Project Post*
+   * Description field in *Project*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: Enter Description (Must)
@@ -178,7 +176,7 @@ interface ProjectPostDocumentData {
   description: prismic.RichTextField;
 
   /**
-   * Project Main Image field in *Project Post*
+   * Project Main Image field in *Project*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -189,7 +187,7 @@ interface ProjectPostDocumentData {
   project_main_image: prismic.ImageField<never>;
 
   /**
-   * Year field in *Project Post*
+   * Year field in *Project*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Please Enter Year (Must)
@@ -200,46 +198,29 @@ interface ProjectPostDocumentData {
   year: prismic.KeyTextField;
 
   /**
-   * Sector field in *Project Post*
+   * Sector field in *Project*
    *
-   * - **Field Type**: Select
-   * - **Placeholder**: Please Enter Sector (Must)
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
    * - **API ID Path**: project_post.sector
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#select
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  sector: prismic.SelectField<
-    | "Commercial"
-    | "Industrial"
-    | "Hospitality"
-    | "Medical Construction"
-    | "Residential"
-  >;
+  sector: prismic.ContentRelationshipField<"sector_post">;
 
   /**
-   * Sub Sector field in *Project Post*
+   * Subsector field in *Project*
    *
-   * - **Field Type**: Select
-   * - **Placeholder**: Please Enter Sub Sector
-   * - **API ID Path**: project_post.sub_sector
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: project_post.subsector
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#select
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  sub_sector: prismic.SelectField<
-    | "Automotive Showrooms"
-    | "Admin Buildings"
-    | "Malls"
-    | "Factories"
-    | "Warehouses"
-    | "Hotels"
-    | "Boats"
-    | "Restaurants"
-    | "Hospitals"
-    | "Clinics"
-  >;
+  subsector: prismic.ContentRelationshipField<"subsector_post">;
 
   /**
-   * Role field in *Project Post*
+   * Role field in *Project*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Please Enter Role (Must)
@@ -250,46 +231,18 @@ interface ProjectPostDocumentData {
   role: prismic.KeyTextField;
 
   /**
-   * Location field in *Project Post*
+   * Location field in *Project*
    *
-   * - **Field Type**: Select
+   * - **Field Type**: Text
    * - **Placeholder**: Please Enter Location (Must)
    * - **API ID Path**: project_post.location
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#select
+   * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  location: prismic.SelectField<
-    | "Cairo"
-    | "Giza"
-    | "Alexandria"
-    | "Aswan"
-    | "Asyut"
-    | "Beheira"
-    | "Beni Suef"
-    | "Dakahlia"
-    | "Damietta"
-    | "Faiyum"
-    | "Gharbia"
-    | "Ismailia"
-    | "Kafr El Sheikh"
-    | "Luxor"
-    | "Matruh"
-    | "Minya"
-    | "Monufia"
-    | "New Valley"
-    | "North Sinai"
-    | "Port Said"
-    | "Qalyubia"
-    | "Qena"
-    | "Red Sea"
-    | "Sharqia"
-    | "Sohag"
-    | "South Sinai"
-    | "Suez"
-  >;
+  location: prismic.KeyTextField;
 
   /**
-   * Project's Gallery field in *Project Post*
+   * Project's Gallery field in *Project*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
@@ -302,7 +255,7 @@ interface ProjectPostDocumentData {
   >;
 
   /**
-   * Next Project field in *Project Post*
+   * Next Project field in *Project*
    *
    * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
@@ -310,19 +263,8 @@ interface ProjectPostDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  next_project: prismic.ContentRelationshipField<"project_post">;
-
-  /**
-   * Slice Zone field in *Project Post*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: project_post.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/field#slices
-   */
-  slices: prismic.SliceZone<ProjectPostDocumentDataSlicesSlice> /**
-   * Meta Title field in *Project Post*
+  next_project: prismic.ContentRelationshipField<"project_post"> /**
+   * Meta Title field in *Project*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A title of the page used for social media and search engines
@@ -333,7 +275,7 @@ interface ProjectPostDocumentData {
   meta_title: prismic.KeyTextField;
 
   /**
-   * Meta Description field in *Project Post*
+   * Meta Description field in *Project*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A brief summary of the page
@@ -344,7 +286,7 @@ interface ProjectPostDocumentData {
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Project Post*
+   * Meta Image field in *Project*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -356,7 +298,7 @@ interface ProjectPostDocumentData {
 }
 
 /**
- * Project Post document from Prismic
+ * Project document from Prismic
  *
  * - **API ID**: `project_post`
  * - **Repeatable**: `true`
@@ -368,6 +310,119 @@ export type ProjectPostDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
     Simplify<ProjectPostDocumentData>,
     "project_post",
+    Lang
+  >;
+
+/**
+ * Item in *Sector → Related Subsectors*
+ */
+export interface SectorPostDocumentDataRelatedSubsectorsItem {
+  /**
+   * Subsector field in *Sector → Related Subsectors*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.related_subsectors[].subsector
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  subsector: prismic.ContentRelationshipField<"subsector_post">;
+}
+
+/**
+ * Content for Sector documents
+ */
+interface SectorPostDocumentData {
+  /**
+   * Sector Name field in *Sector*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Main Image field in *Sector*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.main_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  main_image: prismic.ImageField<never>;
+
+  /**
+   * Description field in *Sector*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Related Subsectors field in *Sector*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.related_subsectors[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  related_subsectors: prismic.GroupField<
+    Simplify<SectorPostDocumentDataRelatedSubsectorsItem>
+  > /**
+   * Meta Title field in *Sector*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Sector*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Sector*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: sector_post.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Sector document from Prismic
+ *
+ * - **API ID**: `sector_post`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SectorPostDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<SectorPostDocumentData>,
+    "sector_post",
     Lang
   >;
 
@@ -732,11 +787,109 @@ export type SettingsDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Content for Subsector documents
+ */
+interface SubsectorPostDocumentData {
+  /**
+   * Subsector Name field in *Subsector*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Main Image field in *Subsector*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.main_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  main_image: prismic.ImageField<never>;
+
+  /**
+   * Description field in *Subsector*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Parent Sector field in *Subsector*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.parent_sector
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  parent_sector: prismic.ContentRelationshipField<"sector_post"> /**
+   * Meta Title field in *Subsector*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */;
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Subsector*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Subsector*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subsector_post.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Subsector document from Prismic
+ *
+ * - **API ID**: `subsector_post`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SubsectorPostDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<SubsectorPostDocumentData>,
+    "subsector_post",
+    Lang
+  >;
+
 export type AllDocumentTypes =
   | HomePageDocument
   | PageDocument
   | ProjectPostDocument
-  | SettingsDocument;
+  | SectorPostDocument
+  | SettingsDocument
+  | SubsectorPostDocument;
 
 /**
  * Item in *BlockContent → Default → Primary → Right Paragraphes*
@@ -1236,7 +1389,9 @@ declare module "@prismicio/client" {
       ProjectPostDocument,
       ProjectPostDocumentData,
       ProjectPostDocumentDataGalleryImagesItem,
-      ProjectPostDocumentDataSlicesSlice,
+      SectorPostDocument,
+      SectorPostDocumentData,
+      SectorPostDocumentDataRelatedSubsectorsItem,
       SettingsDocument,
       SettingsDocumentData,
       SettingsDocumentDataMainNavigationItem,
@@ -1246,6 +1401,8 @@ declare module "@prismicio/client" {
       SettingsDocumentDataSocialLinksItem,
       SettingsDocumentDataContactInformationItem,
       SettingsDocumentDataFooterLegalLinksItem,
+      SubsectorPostDocument,
+      SubsectorPostDocumentData,
       AllDocumentTypes,
       BlockContentSlice,
       BlockContentSliceDefaultPrimaryRightParagraphesItem,

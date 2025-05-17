@@ -1,9 +1,9 @@
 {
-  "format": "page",
   "id": "project_post",
-  "label": "Project Post",
+  "label": "Project",
   "repeatable": true,
   "status": true,
+  "format": "custom",
   "json": {
     "Main": {
       "uid": {
@@ -44,36 +44,19 @@
         }
       },
       "sector": {
-        "type": "Select",
+        "type": "Link",
         "config": {
           "label": "Sector",
-          "placeholder": "Please Enter Sector (Must)",
-          "options": [
-            "Commercial",
-            "Industrial",
-            "Hospitality",
-            "Medical Construction",
-            "Residential"
-          ]
+          "select": "document",
+          "customtypes": ["sector_post"]
         }
       },
-      "sub_sector": {
-        "type": "Select",
+      "subsector": {
+        "type": "Link",
         "config": {
-          "label": "Sub Sector",
-          "placeholder": "Please Enter Sub Sector",
-          "options": [
-            "Automotive Showrooms",
-            "Admin Buildings",
-            "Malls",
-            "Factories",
-            "Warehouses",
-            "Hotels",
-            "Boats",
-            "Restaurants",
-            "Hospitals",
-            "Clinics"
-          ]
+          "label": "Subsector",
+          "select": "document",
+          "customtypes": ["subsector_post"]
         }
       },
       "role": {
@@ -84,39 +67,10 @@
         }
       },
       "location": {
-        "type": "Select",
+        "type": "Text",
         "config": {
           "label": "Location",
-          "placeholder": "Please Enter Location (Must)",
-          "options": [
-            "Cairo",
-            "Giza",
-            "Alexandria",
-            "Aswan",
-            "Asyut",
-            "Beheira",
-            "Beni Suef",
-            "Dakahlia",
-            "Damietta",
-            "Faiyum",
-            "Gharbia",
-            "Ismailia",
-            "Kafr El Sheikh",
-            "Luxor",
-            "Matruh",
-            "Minya",
-            "Monufia",
-            "New Valley",
-            "North Sinai",
-            "Port Said",
-            "Qalyubia",
-            "Qena",
-            "Red Sea",
-            "Sharqia",
-            "Sohag",
-            "South Sinai",
-            "Suez"
-          ]
+          "placeholder": "Please Enter Location (Must)"
         }
       },
       "gallery_images": {
@@ -141,15 +95,7 @@
         "config": {
           "label": "Next Project",
           "select": "document",
-          "repeat": false,
           "customtypes": ["project_post"]
-        }
-      },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
-        "config": {
-          "choices": {}
         }
       }
     },

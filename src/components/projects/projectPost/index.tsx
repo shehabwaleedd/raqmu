@@ -3,9 +3,8 @@
 import { Content, isFilled } from '@prismicio/client';
 import { PrismicRichText } from '@prismicio/react';
 import { PrismicNextImage } from '@prismicio/next';
-import Breadcrumbs from '@/components/projects/breadCrumbs';
 import Gallery from '@/components/projects/gallery';
-import NextProject from '@/components/projects/nextProject';
+import TransitionLink from '@/animation/transitionLink';
 import styles from './style.module.scss';
 
 interface ProjectPostProps {
@@ -14,6 +13,18 @@ interface ProjectPostProps {
 
 export default function ProjectPost({ project }: ProjectPostProps) {
     const { data } = project;
+
+    const sectorData = {
+        uid: isFilled.contentRelationship(data.sector) ? data.sector.uid || '' : '',
+        name: isFilled.contentRelationship(data.sector) ?
+            (data.sector.data as { name: string })?.name || '' : ''
+    };
+
+    const subsectorData = {
+        uid: isFilled.contentRelationship(data.subsector) ? data.subsector.uid || '' : '',
+        name: isFilled.contentRelationship(data.subsector) ?
+            (data.subsector.data as { name: string })?.name || '' : ''
+    };
 
     return (
         <div className={styles.projectPost}>
@@ -32,14 +43,24 @@ export default function ProjectPost({ project }: ProjectPostProps) {
                             <span className={styles.metaLabel}>Role</span>
                             <span className={styles.metaValue}>{data.role}</span>
                         </div>
-                        <div className={styles.metaItem}>
-                            <span className={styles.metaLabel}>Sector</span>
-                            <span className={styles.metaValue}>{data.sector}</span>
-                        </div>
-                        {data.sub_sector && (
+                        {sectorData.uid && (
+                            <div className={styles.metaItem}>
+                                <span className={styles.metaLabel}>Sector</span>
+                                <span className={styles.metaValue}>
+                                    <TransitionLink href={`/sectors/${encodeURIComponent(sectorData.uid)}`}>
+                                        {sectorData.name}
+                                    </TransitionLink>
+                                </span>
+                            </div>
+                        )}
+                        {subsectorData.uid && (
                             <div className={styles.metaItem}>
                                 <span className={styles.metaLabel}>Sub Sector</span>
-                                <span className={styles.metaValue}>{data.sub_sector}</span>
+                                <span className={styles.metaValue}>
+                                    <TransitionLink href={`/sectors/${encodeURIComponent(sectorData.uid)}/${encodeURIComponent(subsectorData.uid)}`}>
+                                        {subsectorData.name}
+                                    </TransitionLink>
+                                </span>
                             </div>
                         )}
                         <div className={styles.metaItem}>
@@ -50,10 +71,12 @@ export default function ProjectPost({ project }: ProjectPostProps) {
                 </aside>
 
                 <main className={styles.content}>
-                    <Breadcrumbs clientName={data.client_name as string} />
-
                     <div className={styles.mainImage}>
-                        <PrismicNextImage field={data.project_main_image}sizes="(max-width: 768px) 100vw, 70vw"priority/>
+                        <PrismicNextImage
+                            field={data.project_main_image}
+                            sizes="(max-width: 768px) 100vw, 70vw"
+                            priority
+                        />
                     </div>
 
                     <div className={styles.description}>
@@ -65,10 +88,6 @@ export default function ProjectPost({ project }: ProjectPostProps) {
                     )}
                 </main>
             </div>
-
-            {isFilled.contentRelationship(data.next_project) && (
-                <NextProject project={data.next_project} />
-            )}
         </div>
     );
 }

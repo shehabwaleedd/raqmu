@@ -1,0 +1,98 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.projectsPage {
+    background-color: $white;
+    min-height: 100vh;
+    padding-top: $spacing-4xl;
+}
+
+.container {
+    max-width: $container-max-width-xxl;
+    margin: 0 auto;
+    padding: 0 $site-margin-desktop;
+
+    @include respond-to(medium-tablet) {
+        padding: 0 $site-margin-mobile;
+    }
+}
+
+.header {
+    position: relative;
+    padding: $spacing-4xl 0 $spacing-5xl;
+    text-align: center;
+    background: linear-gradient(135deg, $white 0%, $brand-gray 100%);
+    margin: 0 (-$site-margin-desktop) $spacing-4xl;
+
+    @include respond-to(medium-tablet) {
+        margin: 0 (-$site-margin-mobile) $spacing-3xl;
+        padding: $spacing-3xl 0 $spacing-4xl;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 2px;
+        background-color: $accent-color;
+    }
+}
+
+.headerContent {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 $site-margin-desktop;
+
+    @include respond-to(medium-tablet) {
+        padding: 0 $site-margin-mobile;
+    }
+}
+
+.eyebrow {
+    display: inline-block;
+    font-family: $medium-font;
+    font-size: $small-font-size;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $accent-color;
+    margin-bottom: $spacing-lg;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 1px;
+        background-color: $accent-color;
+    }
+}
+
+.title {
+    font-family: $title-font;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: $bold-font-weight;
+    color: $title-color;
+    margin-bottom: $spacing-xl;
+    line-height: 1.1;
+
+    background: linear-gradient(135deg, $title-color 0%, $accent-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-family: $body-font;
+    font-size: $body-font-size;
+    color: $text-color;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+}
