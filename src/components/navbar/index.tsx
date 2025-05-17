@@ -63,26 +63,26 @@ function useGSAPNavigation(
     const mobileNavTimeline = useRef<gsap.core.Timeline | null>(null);
 
     useEffect(() => {
-        navTimeline.current = gsap.timeline({ 
+        navTimeline.current = gsap.timeline({
             paused: true,
             onComplete: () => {
                 isAnimating.current = false;
             }
         });
-        
-        exitTimeline.current = gsap.timeline({ 
+
+        exitTimeline.current = gsap.timeline({
             paused: true,
             onComplete: () => {
                 isAnimating.current = false;
             }
         });
-        
+
         mobileNavTimeline.current = gsap.timeline({ paused: true })
             .fromTo(mobileNavRef.current,
                 { x: '100%' },
-                { 
-                    x: '0%', 
-                    duration: 0.5, 
+                {
+                    x: '0%',
+                    duration: 0.5,
                     ease: 'power3.out'
                 }
             );
@@ -101,24 +101,24 @@ function useGSAPNavigation(
 
         if (active && !prevActive.current) {
             isAnimating.current = true;
-            
+
             // Clear previous animations
             if (navTimeline.current) {
                 navTimeline.current.clear();
             }
-            
+
             // Make sure content is visible first for proper measurement
             if (expandedContentRef.current) {
                 expandedContentRef.current.style.display = 'block';
                 expandedContentRef.current.style.opacity = '0';
                 expandedContentRef.current.style.height = 'auto';
-                
+
                 // Get the current height
                 const contentHeight = expandedContentRef.current.offsetHeight;
-                
+
                 // Reset to initial state for animation
                 expandedContentRef.current.style.height = '0';
-                
+
                 // Create and play animation
                 navTimeline.current = gsap.timeline({
                     onComplete: () => {
@@ -129,7 +129,7 @@ function useGSAPNavigation(
                         }
                     }
                 });
-                
+
                 navTimeline.current
                     .to(navbarRef.current, {
                         height: `calc(4.5rem + ${contentHeight}px)`,
@@ -142,24 +142,24 @@ function useGSAPNavigation(
                         duration: 0.4,
                         ease: 'power2.out'
                     }, '-=0.25');
-                
+
                 navTimeline.current.play();
             }
         } else if (!active && prevActive.current) {
             isAnimating.current = true;
-            
+
             // Clear previous animations
             if (exitTimeline.current) {
                 exitTimeline.current.clear();
             }
-            
+
             if (expandedContentRef.current) {
                 // Get current height before animation
                 const contentHeight = expandedContentRef.current.offsetHeight;
-                
+
                 // Fix height to current value for smooth animation
                 expandedContentRef.current.style.height = `${contentHeight}px`;
-                
+
                 exitTimeline.current = gsap.timeline({
                     onComplete: () => {
                         isAnimating.current = false;
@@ -168,7 +168,7 @@ function useGSAPNavigation(
                         }
                     }
                 });
-                
+
                 exitTimeline.current
                     .to(expandedContentRef.current, {
                         opacity: 0,
@@ -181,18 +181,18 @@ function useGSAPNavigation(
                         duration: 0.3,
                         ease: 'power2.inOut'
                     }, '-=0.2');
-                
+
                 exitTimeline.current.play();
             }
         } else if (active && prevActive.current && active !== prevActive.current) {
             isAnimating.current = true;
-            
+
             const timeline = gsap.timeline({
                 onComplete: () => {
                     isAnimating.current = false;
                 }
             });
-            
+
             timeline.to(expandedContentRef.current, {
                 opacity: 0,
                 duration: 0.2,
@@ -209,21 +209,21 @@ function useGSAPNavigation(
                     });
 
                     const activeSection = expandedContentRef.current?.querySelector(
-                        active === 'Sectors' 
-                            ? `.${styles.megaMenu}` 
-                            : active === 'Projects' 
-                                ? `.${styles.projectsMenu}` 
+                        active === 'Sectors'
+                            ? `.${styles.megaMenu}`
+                            : active === 'Projects'
+                                ? `.${styles.projectsMenu}`
                                 : `.${styles.standardMenu}`
                     );
                     if (activeSection) {
                         (activeSection as HTMLElement).style.display = 'flex';
                     }
-                    
+
                     // Adjust container height for new content
                     if (expandedContentRef.current) {
                         expandedContentRef.current.style.height = 'auto';
                         const newHeight = expandedContentRef.current.offsetHeight;
-                        
+
                         gsap.to(navbarRef.current, {
                             height: `calc(4.5rem + ${newHeight}px)`,
                             duration: 0.3,
@@ -232,12 +232,12 @@ function useGSAPNavigation(
                     }
                 }
             })
-            .to(expandedContentRef.current, {
-                opacity: 1,
-                duration: 0.3,
-                ease: 'power2.in'
-            });
-            
+                .to(expandedContentRef.current, {
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+
             timeline.play();
         }
 
@@ -310,7 +310,7 @@ function useGSAPNavigation(
     const toggleMobileSector = (element: HTMLElement, isOpen: boolean) => {
         const submenu = element.querySelector(`.${styles.mobileSubmenu}`);
         if (!submenu) return;
-        
+
         gsap.to(submenu, {
             height: isOpen ? 'auto' : 0,
             opacity: isOpen ? 1 : 0,
@@ -525,19 +525,19 @@ const Navigation: React.FC<NavigationProps> = ({ settings }) => {
 
     const toggleMobileSectorSubmenu = (sectorUid: string) => {
         const newActiveSector = activeMobileSector === sectorUid ? null : sectorUid;
-        
+
         if (activeMobileSector && activeMobileSector !== sectorUid) {
             const prevElement = document.querySelector(`[data-mobile-sector="${activeMobileSector}"]`);
             if (prevElement) {
                 toggleMobileSector(prevElement as HTMLElement, false);
             }
         }
-        
+
         const currentElement = document.querySelector(`[data-mobile-sector="${sectorUid}"]`);
         if (currentElement) {
             toggleMobileSector(currentElement as HTMLElement, newActiveSector !== null);
         }
-        
+
         setActiveMobileSector(newActiveSector);
     };
 
@@ -562,15 +562,9 @@ const Navigation: React.FC<NavigationProps> = ({ settings }) => {
                             }
                             return (
                                 <div key={`nav-${item.title}-${index}`} className={styles.menuItem} onMouseEnter={() => { setActive(item.title); setActiveSector(null); }}>
-                                    {item.has_submenu ? (
-                                        <span className={`${styles.menuLink} ${active === item.title ? styles.active : ''}`}>
-                                            {item.title}
-                                        </span>
-                                    ) : (
-                                        <TransitionLink href={getLinkUrl(item.link)} className={styles.menuLink}>
-                                            {item.title}
-                                        </TransitionLink>
-                                    )}
+                                    <TransitionLink href={getLinkUrl(item.link)} className={styles.menuLink}>
+                                        {item.title}
+                                    </TransitionLink>
                                 </div>
                             );
                         })}
@@ -728,24 +722,9 @@ const Navigation: React.FC<NavigationProps> = ({ settings }) => {
                     <div className={styles.mobileNavLinks}>
                         {mainNav.map((item, index) => (
                             <div key={`mobile-${index}`} className={styles.mobileNavItem}>
-                                {item.has_submenu ? (
-                                    <div className={styles.mobileNavItemWithSubmenu}>
-                                        <span className={styles.mobileNavLink}>
-                                            {item.title}
-                                        </span>
-                                        <div className={styles.mobileSubmenu}>
-                                            {getSubmenuForNav(item.title || '').map((subItem, subIndex) => (
-                                                <button key={`mobile-submenu-${subIndex}`} className={styles.mobileSubmenuLink} onClick={() => { handleNavigation('/', subItem.section_id || ''); setIsMobileMenuOpen(false); }}>
-                                                    {subItem.title}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <TransitionLink href={getLinkUrl(item.link)} className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
-                                        {item.title}
-                                    </TransitionLink>
-                                )}
+                                <TransitionLink href={getLinkUrl(item.link)} className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+                                    {item.title}
+                                </TransitionLink>
                             </div>
                         ))}
                         <div className={styles.mobileNavItem} data-mobile-sector="sectors">

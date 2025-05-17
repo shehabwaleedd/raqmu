@@ -42,17 +42,12 @@
               "config": {
                 "label": "Navigation Link",
                 "select": "document",
-                "customtypes": ["page", "sector_post", "project_post"],
+                "customtypes": [
+                  "page",
+                  "sector_post",
+                  "project_post"
+                ],
                 "allowTargetBlank": true
-              }
-            },
-            "has_submenu": {
-              "type": "Boolean",
-              "config": {
-                "label": "Has Submenu",
-                "placeholder_false": "No submenu",
-                "placeholder_true": "Has submenu",
-                "default_value": false
               }
             }
           }
@@ -90,13 +85,6 @@
                       "label": "Section ID",
                       "placeholder": "e.g. about-us (for scrolling to section)"
                     }
-                  },
-                  "order": {
-                    "type": "Number",
-                    "config": {
-                      "label": "Display Order",
-                      "placeholder": "1, 2, 3..."
-                    }
                   }
                 }
               }
@@ -115,7 +103,9 @@
               "config": {
                 "label": "Sector",
                 "select": "document",
-                "customtypes": ["sector_post"]
+                "customtypes": [
+                  "sector_post"
+                ]
               }
             },
             "display_subsectors": {
@@ -123,13 +113,6 @@
               "config": {
                 "label": "Display Subsectors",
                 "default_value": true
-              }
-            },
-            "order": {
-              "type": "Number",
-              "config": {
-                "label": "Display Order",
-                "placeholder": "1, 2, 3..."
               }
             }
           }
@@ -147,7 +130,9 @@
                 "label": "Project",
                 "select": "document",
                 "repeat": false,
-                "customtypes": ["project_post"]
+                "customtypes": [
+                  "project_post"
+                ]
               }
             }
           }
@@ -189,7 +174,11 @@
               "config": {
                 "label": "Information Type",
                 "placeholder": "",
-                "options": ["email", "phone", "address"]
+                "options": [
+                  "email",
+                  "phone",
+                  "address"
+                ]
               }
             },
             "value": {
@@ -197,13 +186,6 @@
               "config": {
                 "label": "Contact Detail",
                 "placeholder": "Enter contact information"
-              }
-            },
-            "order": {
-              "type": "Number",
-              "config": {
-                "label": "Display Order",
-                "placeholder": ""
               }
             }
           }

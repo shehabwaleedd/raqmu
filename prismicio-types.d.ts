@@ -451,17 +451,6 @@ export interface SettingsDocumentDataMainNavigationItem {
   link: prismic.ContentRelationshipField<
     "page" | "sector_post" | "project_post"
   >;
-
-  /**
-   * Has Submenu field in *Settings → Main Navigation*
-   *
-   * - **Field Type**: Boolean
-   * - **Placeholder**: *None*
-   * - **Default Value**: false
-   * - **API ID Path**: settings.main_navigation[].has_submenu
-   * - **Documentation**: https://prismic.io/docs/field#boolean
-   */
-  has_submenu: prismic.BooleanField;
 }
 
 /**
@@ -487,16 +476,6 @@ export interface SettingsDocumentDataSubmenuSectionsItemsItem {
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   section_id: prismic.KeyTextField;
-
-  /**
-   * Display Order field in *Settings → Submenu Sections → Submenu Items*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: 1, 2, 3...
-   * - **API ID Path**: settings.submenu_sections[].items[].order
-   * - **Documentation**: https://prismic.io/docs/field#number
-   */
-  order: prismic.NumberField;
 }
 
 /**
@@ -550,16 +529,6 @@ export interface SettingsDocumentDataFeaturedSectorsItem {
    * - **Documentation**: https://prismic.io/docs/field#boolean
    */
   display_subsectors: prismic.BooleanField;
-
-  /**
-   * Display Order field in *Settings → Featured Sectors in Navigation*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: 1, 2, 3...
-   * - **API ID Path**: settings.featured_sectors[].order
-   * - **Documentation**: https://prismic.io/docs/field#number
-   */
-  order: prismic.NumberField;
 }
 
 /**
@@ -625,16 +594,6 @@ export interface SettingsDocumentDataContactInformationItem {
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   value: prismic.KeyTextField;
-
-  /**
-   * Display Order field in *Settings → Contact Information*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: *None*
-   * - **API ID Path**: settings.contact_information[].order
-   * - **Documentation**: https://prismic.io/docs/field#number
-   */
-  order: prismic.NumberField;
 }
 
 /**
