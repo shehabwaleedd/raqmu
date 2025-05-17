@@ -50,8 +50,8 @@ export default function ProjectsClient({
 
     const filteredProjects = useMemo(() => {
         const filtered = projects.filter(project => {
-            // Safely extract values from content relationship fields
             let projectSector = '';
+
             if (isFilled.contentRelationship(project.data.sector)) {
                 projectSector = project.data.sector.uid || '';
             }

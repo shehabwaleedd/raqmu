@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { createClient } from "@/prismicio";
-import { Content, isFilled, predicate } from "@prismicio/client"; // Import predicate properly
+import { Content, isFilled } from "@prismicio/client";
 import SectorsIndex from '@/components/sectors/sectorIndex';
 import SectorDetail from '@/components/sectors/sectorDetail';
 import SubSectorDetail from '@/components/sectors/subSectorDetail';
@@ -8,8 +8,8 @@ import ProjectDetail from '@/components/projects/projectDetail';
 import ProjectsIndex from '@/components/projects/projectsIndex';
 
 export default async function Page({ params }: { params: { slug?: string[] } }) {
-    const client = createClient();
     const slug = params.slug || [];
+    const client = createClient();
 
     try {
         // Case 1: /projects - Display all projects
@@ -30,19 +30,34 @@ export default async function Page({ params }: { params: { slug?: string[] } }) 
         if (slug.length === 2 && slug[0] === 'sectors') {
             const sectorUid = slug[1];
             const sector = await client.getByUID<Content.SectorPostDocument>('sector_post', sectorUid);
+            let subsectors = [];
 
-            // Fetch all subsectors related to this sector
-            const subsectors = [];
-
-            if (sector.data.related_subsectors) {
+            if (sector.data.related_subsectors && Array.isArray(sector.data.related_subsectors)) {
                 for (const rel of sector.data.related_subsectors) {
-                    if (isFilled.contentRelationship(rel.subsector)) {
-                        const subsector = await client.getByUID<Content.SubsectorPostDocument>(
-                            'subsector_post',
-                            rel.subsector.uid as string
-                        );
-                        subsectors.push(subsector);
+                    if (rel && typeof rel === 'object' && 'subsector' in rel &&
+                        isFilled.contentRelationship(rel.subsector)) {
+                        try {
+                            const subsector = await client.getByUID<Content.SubsectorPostDocument>(
+                                'subsector_post',
+                                rel.subsector.uid as string
+                            );
+                            subsectors.push(subsector);
+                        } catch (error) {
+                            console.error(`Failed to fetch subsector: ${rel.subsector.uid}`, error);
+                        }
                     }
+                }
+            }
+
+            if (subsectors.length === 0) {
+                try {
+                    const allSubsectors = await client.getAllByType<Content.SubsectorPostDocument>('subsector_post');
+                    subsectors = allSubsectors.filter(subsector => {
+                        return isFilled.contentRelationship(subsector.data.parent_sector) &&
+                            subsector.data.parent_sector.id === sector.id;
+                    });
+                } catch (error) {
+                    console.error(`Failed to fetch all subsectors`, error);
                 }
             }
 
@@ -54,36 +69,60 @@ export default async function Page({ params }: { params: { slug?: string[] } }) 
             const sectorUid = slug[1];
             const subsectorUid = slug[2];
 
-            const subsector = await client.getByUID<Content.SubsectorPostDocument>('subsector_post', subsectorUid);
-            const sector = await client.getByUID<Content.SectorPostDocument>('sector_post', sectorUid);
+            try {
+                const subsector = await client.getByUID<Content.SubsectorPostDocument>(
+                    'subsector_post',
+                    subsectorUid
+                );
 
-            // Fetch projects related to this subsector using predicate correctly
-            const projects = await client.getAllByType<Content.ProjectPostDocument>('project_post', {
-                predicates: [
-                    // Use predicate instead of client.predicates
-                    predicate.at('my.project_post.subsector', subsector.id)
-                ],
-                orderings: [{ field: 'document.first_publication_date', direction: 'desc' }]
-            });
+                const sector = await client.getByUID<Content.SectorPostDocument>(
+                    'sector_post',
+                    sectorUid
+                );
 
-            return <SubSectorDetail sector={sector} subsector={subsector} projects={projects} />;
+
+                const allProjects = await client.getAllByType<Content.ProjectPostDocument>('project_post');
+                console.log(`Total projects: ${allProjects.length}`);
+
+                const projects = allProjects.filter(project => {
+                    if (project.data.subsector && typeof project.data.subsector === 'string' && project.data.subsector === subsectorUid) {
+                        return true;
+                    }
+
+                    if (project.data.subsector && typeof project.data.subsector === 'object') {
+                        if ('uid' in project.data.subsector && project.data.subsector.uid === subsectorUid) {
+                            return true;
+                        }
+
+                        if ('id' in project.data.subsector && project.data.subsector.id === subsector.id) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                });
+
+                console.log(`Found ${projects.length} matching projects for subsector ${subsectorUid}`);
+
+                return <SubSectorDetail sector={sector} subsector={subsector} projects={projects} />;
+            } catch (error) {
+                console.error(`Failed to handle subsector route:`, error);
+                return notFound();
+            }
         }
 
-        // Case 5: /sectors/[sector-uid]/[subsector-uid]/[project-uid] - Display a project
         if (slug.length === 4 && slug[0] === 'sectors') {
             const projectUid = slug[3];
             const project = await client.getByUID<Content.ProjectPostDocument>('project_post', projectUid);
-
-            // Fetch related sector and subsector (safely)
             let subsector = null;
             let sector = null;
 
             if (isFilled.contentRelationship(project.data.subsector)) {
-                subsector = await client.getByID<Content.SubsectorPostDocument>(project.data.subsector.id);
+                subsector = await client.getByID(project.data.subsector.id) as Content.SubsectorPostDocument;
             }
 
             if (isFilled.contentRelationship(project.data.sector)) {
-                sector = await client.getByID<Content.SectorPostDocument>(project.data.sector.id);
+                sector = await client.getByID(project.data.sector.id) as Content.SectorPostDocument;
             }
 
             if (!subsector || !sector) {
@@ -93,7 +132,6 @@ export default async function Page({ params }: { params: { slug?: string[] } }) 
             return <ProjectDetail project={project} sector={sector} subsector={subsector} />;
         }
 
-        // If no matching route, throw to 404
         return notFound();
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -112,7 +150,6 @@ export async function generateStaticParams() {
         { slug: ['sectors'] },
     ];
 
-
     sectors.forEach(sector => {
         routes.push({ slug: ['sectors', sector.uid] });
     });
@@ -126,15 +163,15 @@ export async function generateStaticParams() {
     }
 
     for (const project of projects) {
-        const sector = project.data.sector;
-        const subsector = project.data.subsector;
+        const sectorRel = project.data.sector;
+        const subsectorRel = project.data.subsector;
 
-        if (sector && typeof sector === 'object' && 'uid' in sector &&
-            subsector && typeof subsector === 'object' && 'uid' in subsector) {
+        if (sectorRel && typeof sectorRel === 'object' && 'uid' in sectorRel &&
+            subsectorRel && typeof subsectorRel === 'object' && 'uid' in subsectorRel) {
             routes.push({
                 slug: ['sectors',
-                    sector.uid as string,
-                    subsector.uid as string,
+                    sectorRel.uid as string,
+                    subsectorRel.uid as string,
                     project.uid]
             });
         }

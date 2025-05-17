@@ -27,12 +27,15 @@ export default function SectorDetail({ sector, subsectors }: SectorDetailProps) 
             }
         }
     };
-    
+
+    // Create breadcrumb items
     const breadcrumbItems = [
         { label: 'Home', href: '/' },
         { label: 'Sectors', href: '/sectors' },
         { label: sector.data.name || '', href: `/sectors/${sector.uid}`, current: true }
     ];
+
+    console.log("Subsectors in SectorDetail component:", subsectors);
 
     return (
         <div className={styles.sectorPage}>
@@ -63,43 +66,49 @@ export default function SectorDetail({ sector, subsectors }: SectorDetailProps) 
                 <section className={styles.subsectorsSection}>
                     <h2 className={styles.subsectorsTitle}>Specialized Areas</h2>
 
-                    <motion.div
-                        className={styles.subsectorsList}
-                        variants={staggerContainer}
-                        initial="initial"
-                        animate="animate"
-                    >
-                        {subsectors.map((subsector, index) => (
-                            <motion.div
-                                key={subsector.uid}
-                                className={styles.subsectorCard}
-                                variants={fadeInUp}
-                                transition={{ delay: index * 0.05 }}
-                            >
-                                <TransitionLink href={`/sectors/${sector.uid}/${subsector.uid}`} className={styles.subsectorLink}>
-                                    <div className={styles.subsectorImage}>
-                                        {isFilled.image(subsector.data.main_image) && (
-                                            <PrismicNextImage
-                                                field={subsector.data.main_image}
-                                                sizes="100vw"
-                                                fill
-                                            />
-                                        )}
-                                        <div className={styles.subsectorOverlay} />
-                                        <div className={styles.subsectorContent}>
-                                            <h3 className={styles.subsectorName}>{subsector.data.name}</h3>
-                                            <span className={styles.viewProjects}>
-                                                View Projects
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg>
-                                            </span>
+                    {subsectors.length > 0 ? (
+                        <motion.div
+                            className={styles.subsectorsList}
+                            variants={staggerContainer}
+                            initial="initial"
+                            animate="animate"
+                        >
+                            {subsectors.map((subsector, index) => (
+                                <motion.div
+                                    key={subsector.uid}
+                                    className={styles.subsectorCard}
+                                    variants={fadeInUp}
+                                    transition={{ delay: index * 0.05 }}
+                                >
+                                    <TransitionLink href={`/sectors/${sector.uid}/${subsector.uid}`} className={styles.subsectorLink}>
+                                        <div className={styles.subsectorImage}>
+                                            {isFilled.image(subsector.data.main_image) && (
+                                                <PrismicNextImage
+                                                    field={subsector.data.main_image}
+                                                    sizes="100vw"
+                                                    fill
+                                                />
+                                            )}
+                                            <div className={styles.subsectorOverlay} />
+                                            <div className={styles.subsectorContent}>
+                                                <h3 className={styles.subsectorName}>{subsector.data.name}</h3>
+                                                <span className={styles.viewProjects}>
+                                                    View Projects
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </TransitionLink>
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                                    </TransitionLink>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    ) : (
+                        <div className={styles.noSubsectors}>
+                            <p>No specialized areas found for this sector. Please check the content setup in Prismic.</p>
+                        </div>
+                    )}
                 </section>
             </div>
         </div>

@@ -10,21 +10,23 @@
     z-index: 1000;
     padding: $spacing-xs;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    // Apply GPU acceleration for smoother animations
+    will-change: transform;
 }
 
 .navbar {
     position: relative;
-    background: $white;
+    background: rgba($white, 0.98);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); // For Safari support
     border-radius: $border-radius-sm;
     border: 1px solid rgba($title-color, 0.1);
-    box-shadow: 
+    box-shadow:
         0 4px 6px -1px rgba($title-color, 0.1),
         0 2px 4px -1px rgba($title-color, 0.06);
     max-width: none;
     margin: 0;
-    
-
 }
 
 .container {
@@ -73,69 +75,204 @@
     font-weight: 500;
     padding: $spacing-sm $spacing-md;
     border-radius: $border-radius-sm;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
+    display: block;
 
     &:hover {
         background: rgba($title-color, 0.05);
     }
 }
 
+// Enhanced submenu positioning with smart alignment
 .submenuWrapper {
     position: absolute;
-    top: calc(100% + 1.2rem);
-    left: 50%;
-    transform: translateX(-50%);
-    padding-top: $spacing-md;
+    top: 100%;
+    left: 0;
     z-index: 100;
+    min-width: 280px;
+    background: rgba($white, 0.98);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba($title-color, 0.1);
+    box-shadow:
+        0 4px 6px -1px rgba($title-color, 0.1),
+        0 2px 4px -1px rgba($title-color, 0.06);
+    overflow: hidden;
 }
 
 .submenu {
-    background: $white;
+    padding: 0.75rem 0;
+}
+
+.sectorsSubmenu {
+    display: flex;
+    min-width: 600px;
+    background: rgba($white, 0.98);
     backdrop-filter: blur(10px);
-    border-radius: 1rem;
-    overflow: hidden;
-    border: 1px solid rgba($title-color, 0.1);
-    box-shadow: 
-        0 25px 50px -12px rgba($title-color, 0.25),
-        0 10px 25px -12px rgba($title-color, 0.15);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .submenuContent {
-    width: max-content;
-    height: auto;
-    padding: $spacing-md;
-    @include flex(column, flex-start, stretch);
-    gap: $spacing-xs;
-    min-width: 200px;
+    padding: 0.5rem 0;
 }
 
-.submenuLink {
-    background: none;
-    border: none;
-    color: rgba($title-color, 0.7);
-    font-family: $body-font;
-    font-size: $font-size-sm;
-    font-weight: 400;
-    cursor: pointer;
-    padding: $spacing-sm $spacing-md;
-    text-align: left;
-    border-radius: $border-radius-sm;
+.sectorLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 280px;
+    border-right: 1px solid rgba($title-color, 0.1);
+}
+
+.sectorItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sectorLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    width: 100%;
+    color: $title-color;
+    font-size: $font-size-base;
+    font-weight: 500;
     transition: all 0.2s ease;
-    white-space: nowrap;
+    text-decoration: none;
 
     &:hover {
-        color: $title-color !important;
-        background: $brand-gray;
+        color: $accent-color;
+        background: rgba($accent-color, 0.05);
+    }
+
+    &.active {
+        color: $accent-color;
+        background: rgba($accent-color, 0.05);
     }
 }
 
+.chevron {
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+    opacity: 0.6;
+}
+
+.sectorLink.active .chevron {
+    transform: rotate(90deg);
+    opacity: 1;
+}
+
+.subsectorMenu {
+    position: absolute;
+    left: 280px;
+    top: 0;
+    min-width: 280px;
+    background: rgba($white, 0.98);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba($title-color, 0.1);
+    box-shadow:
+        0 4px 6px -1px rgba($title-color, 0.1),
+        0 2px 4px -1px rgba($title-color, 0.06);
+    padding: 0.75rem 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-10px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.visible {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateX(0);
+    }
+}
+
+.subsectorLink {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: $title-color;
+    font-size: $font-size-sm;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    text-decoration: none;
+
+    &:hover {
+        color: $accent-color;
+        background: rgba($accent-color, 0.05);
+    }
+}
+
+.viewAllLink {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    margin-top: 0.5rem;
+    color: $accent-color;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    text-decoration: none;
+    border-top: 1px solid rgba($title-color, 0.1);
+
+    &:hover {
+        background: rgba($accent-color, 0.05);
+    }
+}
+
+.projectCategory {
+    padding: 1rem;
+    border-top: 1px solid rgba($title-color, 0.1);
+}
+
+.categoryTitle {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: rgba($title-color, 0.6);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.projectList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.projectLink {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: $title-color;
+    font-size: $font-size-sm;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border-radius: $border-radius-sm;
+
+    &:hover {
+        color: $accent-color;
+        background: rgba($accent-color, 0.05);
+    }
+}
 
 @media (prefers-reduced-motion: reduce) {
+
     .navbarWrapper,
     .menuLink,
-    .submenuLink {
-        transition: none;
+    .submenuLink,
+    .sectorLink,
+    .subsectorLink,
+    .projectLink,
+    .viewAllLink {
+        transition: none !important;
+    }
+
+    .submenuWrapper,
+    .submenu,
+    .subsectorMenu {
+        animation: none !important;
     }
 }
 

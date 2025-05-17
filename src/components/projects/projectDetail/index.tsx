@@ -5,7 +5,7 @@ import { PrismicRichText } from '@prismicio/react';
 import { PrismicNextImage } from '@prismicio/next';
 import Gallery from '@/components/projects/gallery';
 import TransitionLink from '@/animation/transitionLink';
-import Breadcrumbs from '@/components/breadCrumbs';
+import Breadcrumbs, { BreadcrumbItem } from '@/components/breadCrumbs';
 import { createClient } from '@/prismicio';
 import styles from './style.module.scss';
 
@@ -101,29 +101,25 @@ export default function ProjectDetail({ project, sector, subsector }: ProjectDet
 interface NextProjectLinkProps {
     nextProjectUid: string;
 }
-
-// Next project will fetch and build the correct route
+    
 async function NextProjectLink({ nextProjectUid }: NextProjectLinkProps) {
     const client = createClient();
 
     try {
         const nextProject = await client.getByUID<Content.ProjectPostDocument>('project_post', nextProjectUid);
-
-        // Get sector and subsector to build URL
         let sectorUid = '';
         let subsectorUid = '';
 
         if (isFilled.contentRelationship(nextProject.data.sector)) {
-            const sector = await client.getByID<Content.SectorPostDocument>(nextProject.data.sector.id);
+            const sector = await client.getByID(nextProject.data.sector.id) as Content.SectorPostDocument;
             sectorUid = sector.uid;
         }
 
         if (isFilled.contentRelationship(nextProject.data.subsector)) {
-            const subsector = await client.getByID<Content.SubsectorPostDocument>(nextProject.data.subsector.id);
+            const subsector = await client.getByID(nextProject.data.subsector.id) as Content.SubsectorPostDocument;
             subsectorUid = subsector.uid;
         }
 
-        // Build the URL for the next project
         const nextProjectUrl = `/sectors/${sectorUid}/${subsectorUid}/${nextProject.uid}`;
 
         return (

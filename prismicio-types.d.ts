@@ -441,14 +441,16 @@ export interface SettingsDocumentDataMainNavigationItem {
   title: prismic.KeyTextField;
 
   /**
-   * URL Path field in *Settings → Main Navigation*
+   * Navigation Link field in *Settings → Main Navigation*
    *
-   * - **Field Type**: Text
-   * - **Placeholder**: e.g. /products
-   * - **API ID Path**: settings.main_navigation[].href
-   * - **Documentation**: https://prismic.io/docs/field#key-text
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.main_navigation[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  href: prismic.KeyTextField;
+  link: prismic.ContentRelationshipField<
+    "page" | "sector_post" | "project_post"
+  >;
 
   /**
    * Has Submenu field in *Settings → Main Navigation*
@@ -525,38 +527,54 @@ export interface SettingsDocumentDataSubmenuSectionsItem {
 }
 
 /**
+ * Item in *Settings → Featured Sectors in Navigation*
+ */
+export interface SettingsDocumentDataFeaturedSectorsItem {
+  /**
+   * Sector field in *Settings → Featured Sectors in Navigation*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.featured_sectors[].sector
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  sector: prismic.ContentRelationshipField<"sector_post">;
+
+  /**
+   * Display Subsectors field in *Settings → Featured Sectors in Navigation*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: settings.featured_sectors[].display_subsectors
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  display_subsectors: prismic.BooleanField;
+
+  /**
+   * Display Order field in *Settings → Featured Sectors in Navigation*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: 1, 2, 3...
+   * - **API ID Path**: settings.featured_sectors[].order
+   * - **Documentation**: https://prismic.io/docs/field#number
+   */
+  order: prismic.NumberField;
+}
+
+/**
  * Item in *Settings → Product Categories*
  */
 export interface SettingsDocumentDataProductCategoriesItem {
   /**
-   * Category Title field in *Settings → Product Categories*
+   * Project field in *Settings → Product Categories*
    *
-   * - **Field Type**: Text
-   * - **Placeholder**: e.g. Fire Valves
-   * - **API ID Path**: settings.product_categories[].title
-   * - **Documentation**: https://prismic.io/docs/field#key-text
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.product_categories[].project
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  title: prismic.KeyTextField;
-
-  /**
-   * Category URL field in *Settings → Product Categories*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: e.g. /products/fire-valves
-   * - **API ID Path**: settings.product_categories[].href
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  href: prismic.KeyTextField;
-
-  /**
-   * Display Order field in *Settings → Product Categories*
-   *
-   * - **Field Type**: Number
-   * - **Placeholder**: Enter number for ordering
-   * - **API ID Path**: settings.product_categories[].order
-   * - **Documentation**: https://prismic.io/docs/field#number
-   */
-  order: prismic.NumberField;
+  project: prismic.ContentRelationshipField<"project_post">;
 }
 
 /**
@@ -694,6 +712,19 @@ interface SettingsDocumentData {
    */
   submenu_sections: prismic.GroupField<
     Simplify<SettingsDocumentDataSubmenuSectionsItem>
+  >;
+
+  /**
+   * Featured Sectors in Navigation field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.featured_sectors[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  featured_sectors: prismic.GroupField<
+    Simplify<SettingsDocumentDataFeaturedSectorsItem>
   >;
 
   /**
@@ -1425,6 +1456,7 @@ declare module "@prismicio/client" {
       SettingsDocumentDataMainNavigationItem,
       SettingsDocumentDataSubmenuSectionsItemsItem,
       SettingsDocumentDataSubmenuSectionsItem,
+      SettingsDocumentDataFeaturedSectorsItem,
       SettingsDocumentDataProductCategoriesItem,
       SettingsDocumentDataSocialLinksItem,
       SettingsDocumentDataContactInformationItem,

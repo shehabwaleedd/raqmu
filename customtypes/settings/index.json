@@ -37,11 +37,13 @@
                 "placeholder": "e.g. Products, Who We Are"
               }
             },
-            "href": {
-              "type": "Text",
+            "link": {
+              "type": "Link",
               "config": {
-                "label": "URL Path",
-                "placeholder": "e.g. /products"
+                "label": "Navigation Link",
+                "select": "document",
+                "customtypes": ["page", "sector_post", "project_post"],
+                "allowTargetBlank": true
               }
             },
             "has_submenu": {
@@ -102,31 +104,50 @@
           }
         }
       },
-      "product_categories": {
+      "featured_sectors": {
         "type": "Group",
         "config": {
-          "label": "Product Categories",
+          "label": "Featured Sectors in Navigation",
           "repeat": true,
           "fields": {
-            "title": {
-              "type": "Text",
+            "sector": {
+              "type": "Link",
               "config": {
-                "label": "Category Title",
-                "placeholder": "e.g. Fire Valves"
+                "label": "Sector",
+                "select": "document",
+                "customtypes": ["sector_post"]
               }
             },
-            "href": {
-              "type": "Text",
+            "display_subsectors": {
+              "type": "Boolean",
               "config": {
-                "label": "Category URL",
-                "placeholder": "e.g. /products/fire-valves"
+                "label": "Display Subsectors",
+                "default_value": true
               }
             },
             "order": {
               "type": "Number",
               "config": {
                 "label": "Display Order",
-                "placeholder": "Enter number for ordering"
+                "placeholder": "1, 2, 3..."
+              }
+            }
+          }
+        }
+      },
+      "product_categories": {
+        "type": "Group",
+        "config": {
+          "label": "Product Categories",
+          "repeat": true,
+          "fields": {
+            "project": {
+              "type": "Link",
+              "config": {
+                "label": "Project",
+                "select": "document",
+                "repeat": false,
+                "customtypes": ["project_post"]
               }
             }
           }
